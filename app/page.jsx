@@ -39,6 +39,7 @@ const countryCities = {
     "Калуга",
     "Киров",
     "Кострома",
+    "Краснодар",
     "Красноярск",
     "Липецк",
     "Махачкала",
@@ -52,6 +53,7 @@ const countryCities = {
     "Саранск",
     "Саратов",
     "Смоленск",
+    "Сочи",
     "Тамбов",
     "Тверь",
     "Тольятти",
@@ -62,8 +64,8 @@ const countryCities = {
   ],
   TH: ["Бангкок", "Паттайя", "Пхукет"],
   UZ: ["Наманган", "Ташкент"],
-
 };
+
 const countryCitiesEn = {
   RU: [
     "Veliky Novgorod",
@@ -76,6 +78,7 @@ const countryCitiesEn = {
     "Kaluga",
     "Kirov",
     "Kostroma",
+    "Krasnodar",
     "Krasnoyarsk",
     "Lipetsk",
     "Makhachkala",
@@ -89,6 +92,7 @@ const countryCitiesEn = {
     "Saint Petersburg",
     "Saratov",
     "Smolensk",
+    "Sochi",
     "Tambov",
     "Tver",
     "Togliatti",
@@ -99,18 +103,7 @@ const countryCitiesEn = {
   ],
   BY: ["Brest", "Vitebsk", "Gomel", "Grodno", "Minsk", "Mogilev"],
   AM: ["Yerevan"],
-  KZ: [
-    "Aktobe",
-    "Almaty",
-    "Astana",
-    "Atyrau",
-    "Karaganda",
-    "Pavlodar",
-    "Semey",
-    "Shymkent",
-    "Taraz",
-    "Ust-Kamenogorsk",
-  ],
+  KZ: ["Aktobe", "Almaty", "Astana", "Atyrau", "Karaganda", "Pavlodar", "Semey", "Shymkent", "Taraz", "Ust-Kamenogorsk"],
   IN: ["Bangalore", "Chennai", "Delhi", "Kolkata", "Mumbai"],
   ID: ["Bali", "Jakarta", "Surabaya"],
   KG: ["Bishkek"],
@@ -131,10 +124,6 @@ const activeMapCountries = [
   { code: "TH", names: ["Thailand"] },
   { code: "UZ", names: ["Uzbekistan"] },
 ];
-
-
-
-const activeMapCountryCodes = activeMapCountries.map((country) => country.code);
 
 const crypto = ["USDT", "BTC", "ETH", "BNB", "SOL", "USDC"];
 const fiat = ["AED", "AMD", "BYN", "IDR", "INR", "KGS", "KZT", "RUB", "THB", "UZS"];
@@ -167,32 +156,41 @@ const cryptoPriceIds = {
   BNB: "binancecoin",
   SOL: "solana",
 };
+
 const cryptoIds = Object.values(cryptoPriceIds).join(",");
 
 async function fetchMarketUsdRates() {
-  const [fiatResponse, cryptoResponse] = await Promise.all([
-    fetch("https://open.er-api.com/v6/latest/USD"),
-    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`),
-  ]);
+  try {
+    const [fiatResponse, cryptoResponse] = await Promise.all([
+      fetch("https://open.er-api.com/v6/latest/USD"),
+      fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`),
+    ]);
 
-  if (!fiatResponse.ok || !cryptoResponse.ok) throw new Error("Rate API request failed");
+    if (!fiatResponse.ok || !cryptoResponse.ok) {
+      console.warn("Rate API request failed. Fallback rates are used.");
+      return fallbackUsdRates;
+    }
 
-  const fiatData = await fiatResponse.json();
-  const cryptoData = await cryptoResponse.json();
-  const nextRates = { ...fallbackUsdRates };
+    const fiatData = await fiatResponse.json();
+    const cryptoData = await cryptoResponse.json();
+    const nextRates = { ...fallbackUsdRates };
 
-  fiat.forEach((code) => {
-    const usdToFiatRate = fiatData?.rates?.[code];
-    if (usdToFiatRate) nextRates[code] = 1 / usdToFiatRate;
-  });
+    fiat.forEach((code) => {
+      const usdToFiatRate = fiatData?.rates?.[code];
+      if (usdToFiatRate) nextRates[code] = 1 / usdToFiatRate;
+    });
 
-  crypto.forEach((code) => {
-    const coinId = cryptoPriceIds[code];
-    const priceUsd = cryptoData?.[coinId]?.usd;
-    if (priceUsd) nextRates[code] = priceUsd;
-  });
+    crypto.forEach((code) => {
+      const coinId = cryptoPriceIds[code];
+      const priceUsd = cryptoData?.[coinId]?.usd;
+      if (priceUsd) nextRates[code] = priceUsd;
+    });
 
-  return nextRates;
+    return nextRates;
+  } catch (error) {
+    console.warn("Rate API unavailable. Fallback rates are used.", error);
+    return fallbackUsdRates;
+  }
 }
 
 const content = {
@@ -202,7 +200,7 @@ const content = {
     contact: "Контакты",
     title: "Обмен криптовалют в офисе",
     subtitle: "Лучшие курсы для наших новых и постоянных клиентов, выдача по всему миру. Более редкие валюты делаем по предварительной договоренности",
-start: "Совершить обмен",
+    start: "Совершить обмен",
     tg: "Написать в Telegram",
     formSmall: "Заявка на обмен",
     formTitle: "Оформить сделку",
@@ -309,9 +307,18 @@ start: "Совершить обмен",
 };
 
 const trustBadges = {
-  ru: [["✓", "Без предоплаты"], ["🏢", "Сделка в офисе"], ["🔒", "Конфиденциально"]],
-  en: [["✓", "No prepayment"], ["🏢", "Office transaction"], ["🔒", "Private"]],
+  ru: [
+    ["✓", "Без предоплаты"],
+    ["🏢", "Сделка в офисе"],
+    ["🔒", "Конфиденциально"],
+  ],
+  en: [
+    ["✓", "No prepayment"],
+    ["🏢", "Office transaction"],
+    ["🔒", "Private"],
+  ],
 };
+
 const processIcons = ["✍️", "📈", "🏢", "💸"];
 
 function formatCityCount(count, lang) {
@@ -336,7 +343,16 @@ function BrandLogo({ variant = "header" }) {
     header: "w-24 sm:w-28 lg:w-32",
     hero: "w-[220px] sm:w-[300px] lg:w-[380px]",
   };
-  return <img src={LOGO_SRC} alt="Token Cash" className={`${sizes[variant]} h-auto object-contain`} loading={variant === "hero" ? "eager" : "lazy"} decoding="async" />;
+
+  return (
+    <img
+      src={LOGO_SRC}
+      alt="Token Cash"
+      className={`${sizes[variant]} h-auto object-contain`}
+      loading={variant === "hero" ? "eager" : "lazy"}
+      decoding="async"
+    />
+  );
 }
 
 function LogoMark() {
@@ -346,12 +362,19 @@ function LogoMark() {
 function LangSwitch({ lang, setLang }) {
   return (
     <div className="flex rounded-full border border-white/10 bg-white/[.045] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
-      {[["ru", "RU"], ["en", "EN"]].map(([key, label]) => (
+      {[
+        ["ru", "RU"],
+        ["en", "EN"],
+      ].map(([key, label]) => (
         <button
           key={key}
           type="button"
           onClick={() => setLang(key)}
-          className={`rounded-full px-4 py-2 text-sm font-black transition ${lang === key ? "bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 text-white shadow-[0_0_28px_rgba(139,92,246,.45)]" : "text-zinc-400 hover:bg-white/[.06] hover:text-white"}`}
+          className={`rounded-full px-4 py-2 text-sm font-black transition ${
+            lang === key
+              ? "bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 text-white shadow-[0_0_28px_rgba(139,92,246,.45)]"
+              : "text-zinc-400 hover:bg-white/[.06] hover:text-white"
+          }`}
         >
           {label}
         </button>
@@ -365,15 +388,11 @@ function TetherOrb() {
     <div className="relative mx-auto h-[400px] w-[400px] sm:h-[500px] sm:w-[500px] lg:h-[620px] lg:w-[620px]">
       <div className="absolute inset-[-10%] rounded-full bg-[radial-gradient(circle,rgba(139,92,246,.20)_0%,rgba(34,211,238,.13)_34%,rgba(0,0,0,0)_72%)] blur-3xl" />
 
-      <motion.div
-        className="absolute inset-0"
-        animate={{ y: [0, -7, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
+      <motion.div className="absolute inset-0" animate={{ y: [0, -7, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}>
         <img
           src="/eth.webp"
           alt="Ethereum coin"
-          className="absolute left-[50%] top-[34%] z-20 h-auto w-[150px] -translate-x-1/2 -translate-y-1/2 object-contain select-none pointer-events-none drop-shadow-[0_24px_60px_rgba(0,0,0,.42)] sm:w-[190px] lg:w-[245px]"
+          className="absolute left-[50%] top-[34%] z-20 h-auto w-[150px] -translate-x-1/2 -translate-y-1/2 select-none object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,.42)] pointer-events-none sm:w-[190px] lg:w-[245px]"
           loading="eager"
           decoding="async"
           draggable="false"
@@ -382,7 +401,7 @@ function TetherOrb() {
         <img
           src="/btc.webp"
           alt="Bitcoin coin"
-          className="absolute left-[32%] top-[55%] z-20 h-auto w-[165px] -translate-x-1/2 -translate-y-1/2 object-contain select-none pointer-events-none drop-shadow-[0_24px_60px_rgba(0,0,0,.42)] sm:w-[210px] lg:w-[270px]"
+          className="absolute left-[32%] top-[55%] z-20 h-auto w-[165px] -translate-x-1/2 -translate-y-1/2 select-none object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,.42)] pointer-events-none sm:w-[210px] lg:w-[270px]"
           loading="eager"
           decoding="async"
           draggable="false"
@@ -391,7 +410,7 @@ function TetherOrb() {
         <img
           src="/tether.webp"
           alt="Tether coin"
-          className="absolute left-[61%] top-[60%] z-30 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2 object-contain select-none pointer-events-none drop-shadow-[0_34px_90px_rgba(139,92,246,.28)] sm:w-[330px] lg:w-[430px]"
+          className="absolute left-[61%] top-[60%] z-30 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2 select-none object-contain drop-shadow-[0_34px_90px_rgba(139,92,246,.28)] pointer-events-none sm:w-[330px] lg:w-[430px]"
           loading="eager"
           decoding="async"
           draggable="false"
@@ -413,6 +432,48 @@ function RotatingOrb() {
   );
 }
 
+function CustomSelect({ value, options, onChange, className = "" }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className={`relative ${className}`}>
+      <button
+        type="button"
+        onClick={() => setOpen((state) => !state)}
+        className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-black/25 p-2 text-left text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.07)] transition hover:border-violet-300/35 hover:bg-white/[.06]"
+      >
+        <span>{value}</span>
+        <span className={`text-zinc-400 transition ${open ? "rotate-180" : ""}`}>⌄</span>
+      </button>
+
+      {open && (
+        <>
+          <button type="button" aria-label="Close select" onClick={() => setOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
+
+          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[260px] overflow-y-auto rounded-2xl border border-white/10 bg-[#12101c]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.7)_rgba(255,255,255,.06)]">
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => {
+                  onChange(option);
+                  setOpen(false);
+                }}
+                className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-bold transition ${
+                  option === value ? "bg-gradient-to-r from-violet-500/75 to-cyan-300/50 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+                }`}
+              >
+                <span>{option}</span>
+                {option === value && <span className="text-xs text-white/80">✓</span>}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function ExchangeForm({ t, lang }) {
   const [countryCode, setCountryCode] = useState("AM");
   const [countryOpen, setCountryOpen] = useState(false);
@@ -423,16 +484,15 @@ function ExchangeForm({ t, lang }) {
 
   useEffect(() => {
     let isMounted = true;
+
     async function updateRates() {
-      try {
-        const nextRates = await fetchMarketUsdRates();
-        if (isMounted) setMarketUsdRates(nextRates);
-      } catch (error) {
-        console.error("Failed to update market rates", error);
-      }
+      const nextRates = await fetchMarketUsdRates();
+      if (isMounted) setMarketUsdRates(nextRates);
     }
+
     updateRates();
     const timer = setInterval(updateRates, 60000);
+
     return () => {
       isMounted = false;
       clearInterval(timer);
@@ -464,19 +524,39 @@ function ExchangeForm({ t, lang }) {
 
       <label className="relative z-10 mb-2 block text-xs text-zinc-500">{t.country}</label>
       <div className="relative z-30 mb-4">
-        <button type="button" onClick={() => setCountryOpen((value) => !value)} className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[.055] px-4 py-3 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10),inset_0_-10px_22px_rgba(0,0,0,.18)] outline-none backdrop-blur-xl transition hover:border-violet-300/30">
-          <span className="font-semibold">{lang === "ru" ? country.ru : country.en} · {country.fiat}</span>
+        <button
+          type="button"
+          onClick={() => setCountryOpen((value) => !value)}
+          className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[.055] px-4 py-3 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10),inset_0_-10px_22px_rgba(0,0,0,.18)] outline-none backdrop-blur-xl transition hover:border-violet-300/30"
+        >
+          <span className="font-semibold">
+            {lang === "ru" ? country.ru : country.en} · {country.fiat}
+          </span>
           <span className={`text-zinc-300 transition ${countryOpen ? "rotate-180" : ""}`}>⌄</span>
         </button>
+
         {countryOpen && (
-          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[280px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl">
-            {countries.map((c) => (
-              <button key={c.code} type="button" onClick={() => { changeCountry(c.code); setCountryOpen(false); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${c.code === countryCode ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"}`}>
-                <span className="font-bold">{lang === "ru" ? c.ru : c.en}</span>
-                <span className="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-bold text-violet-100">{c.fiat}</span>
-              </button>
-            ))}
-          </div>
+          <>
+            <button type="button" aria-label="Close country select" onClick={() => setCountryOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
+            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[280px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl">
+              {countries.map((c) => (
+                <button
+                  key={c.code}
+                  type="button"
+                  onClick={() => {
+                    changeCountry(c.code);
+                    setCountryOpen(false);
+                  }}
+                  className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${
+                    c.code === countryCode ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+                  }`}
+                >
+                  <span className="font-bold">{lang === "ru" ? c.ru : c.en}</span>
+                  <span className="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-bold text-violet-100">{c.fiat}</span>
+                </button>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -485,18 +565,15 @@ function ExchangeForm({ t, lang }) {
           <label className="mb-2 block text-xs text-zinc-500">{t.give}</label>
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <input className="w-full bg-transparent text-xl font-semibold text-white outline-none" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" />
-            <select className="mt-3 w-full rounded-xl border border-white/10 bg-black/25 p-2 text-sm text-white" value={give} onChange={(e) => setGive(e.target.value)}>
-              {currencies.map((v) => <option key={v}>{v}</option>)}
-            </select>
+            <CustomSelect className="mt-3" value={give} options={currencies} onChange={setGive} />
           </div>
         </div>
+
         <div>
           <label className="mb-2 block text-xs text-zinc-500">{t.receive}</label>
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-white">{formatted}</div>
-            <select className="mt-3 w-full rounded-xl border border-white/10 bg-black/25 p-2 text-sm text-white" value={receive} onChange={(e) => setReceive(e.target.value)}>
-              {currencies.map((v) => <option key={v}>{v}</option>)}
-            </select>
+            <CustomSelect className="mt-3" value={receive} options={currencies} onChange={setReceive} />
           </div>
         </div>
       </div>
@@ -517,7 +594,7 @@ function ExchangeForm({ t, lang }) {
   );
 }
 
-function DottedWorldMap({ lang, onCountrySelect }) {
+function DottedWorldMap({ lang, onCountrySelect, selectedCountryCode }) {
   const [mapSvg, setMapSvg] = useState("");
   const mapRef = useRef(null);
 
@@ -660,10 +737,7 @@ function DottedWorldMap({ lang, onCountrySelect }) {
       const centerX = minX + (maxX - minX) / 2;
       const centerY = minY + (maxY - minY) / 2;
 
-      const label =
-        lang === "ru"
-          ? countries.find((item) => item.code === country.code)?.ru || country.code
-          : countries.find((item) => item.code === country.code)?.en || country.code;
+      const label = lang === "ru" ? countries.find((item) => item.code === country.code)?.ru || country.code : countries.find((item) => item.code === country.code)?.en || country.code;
 
       const marker = document.createElementNS("http://www.w3.org/2000/svg", "g");
       marker.setAttribute("class", "token-map-marker");
@@ -676,15 +750,15 @@ function DottedWorldMap({ lang, onCountrySelect }) {
         onCountrySelect?.(country.code);
 
         setTimeout(() => {
-  const countryList = document.getElementById("country-list");
+          const countryList = document.getElementById("country-list");
 
-  if (countryList) {
-    countryList.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-}, 80);
+          if (countryList) {
+            countryList.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }, 80);
       };
 
       marker.addEventListener("click", openCountry);
@@ -704,7 +778,7 @@ function DottedWorldMap({ lang, onCountrySelect }) {
 
       svg.appendChild(marker);
     });
-  }, [mapSvg, lang, onCountrySelect]);
+  }, [mapSvg, lang, onCountrySelect, selectedCountryCode]);
 
   return (
     <div className="relative -mx-3 min-h-[470px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02)_50%,rgba(139,92,246,.04))] shadow-[0_24px_80px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_36px_rgba(0,0,0,.22)] backdrop-blur-xl sm:mx-0 sm:min-h-[600px] lg:min-h-[660px]">
@@ -724,7 +798,6 @@ function DottedWorldMap({ lang, onCountrySelect }) {
   );
 }
 
-
 export default function TokenCashLanding() {
   const [lang, setLang] = useState("ru");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -734,13 +807,13 @@ export default function TokenCashLanding() {
   const navLinks = t.nav.map((label, i) => [t.links[i], label]);
 
   const countryCards = useMemo(
-  () =>
-    countries.map((c) => ({
-      ...c,
-      cities: lang === "ru" ? countryCities[c.code] || [] : countryCitiesEn[c.code] || countryCities[c.code] || [],
-    })),
-  [lang]
-);
+    () =>
+      countries.map((c) => ({
+        ...c,
+        cities: lang === "ru" ? countryCities[c.code] || [] : countryCitiesEn[c.code] || countryCities[c.code] || [],
+      })),
+    [lang]
+  );
 
   return (
     <div className="min-h-screen bg-[#07070B] text-white selection:bg-violet-400 selection:text-black">
@@ -752,11 +825,7 @@ export default function TokenCashLanding() {
 
           <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[.035] p-1.5 text-sm font-semibold text-zinc-200 lg:flex">
             {navLinks.map(([href, label]) => (
-              <a
-                key={href}
-                href={href}
-                className="rounded-full px-4 py-2.5 transition hover:-translate-y-0.5 hover:bg-gradient-to-r hover:from-violet-500 hover:via-violet-400 hover:to-cyan-300 hover:text-white"
-              >
+              <a key={href} href={href} className="rounded-full px-4 py-2.5 transition hover:-translate-y-0.5 hover:bg-gradient-to-r hover:from-violet-500 hover:via-violet-400 hover:to-cyan-300 hover:text-white">
                 {label}
               </a>
             ))}
@@ -764,19 +833,12 @@ export default function TokenCashLanding() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <LangSwitch lang={lang} setLang={setLang} />
-            <a
-              href={TELEGRAM_URL}
-              className="rounded-full border border-violet-300/40 bg-violet-500/15 px-5 py-3 text-sm font-black text-white transition hover:bg-gradient-to-r hover:from-violet-500 hover:to-cyan-300"
-            >
+            <a href={TELEGRAM_URL} className="rounded-full border border-violet-300/40 bg-violet-500/15 px-5 py-3 text-sm font-black text-white transition hover:bg-gradient-to-r hover:from-violet-500 hover:to-cyan-300">
               {t.contact}
             </a>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="rounded-xl border border-white/10 p-2 lg:hidden"
-          >
+          <button type="button" onClick={() => setMenuOpen(!menuOpen)} className="rounded-xl border border-white/10 p-2 lg:hidden">
             {menuOpen ? "✕" : "☰"}
           </button>
         </div>
@@ -807,22 +869,14 @@ export default function TokenCashLanding() {
 
             <h1 className="sr-only">{t.title}</h1>
 
-            <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg sm:leading-8">
-              {t.subtitle}
-            </p>
+            <p className="mt-7 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg sm:leading-8">{t.subtitle}</p>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#exchange"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-7 py-4 font-bold text-white shadow-[0_0_45px_rgba(139,92,246,.35)]"
-              >
+              <a href="#exchange" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-7 py-4 font-bold text-white shadow-[0_0_45px_rgba(139,92,246,.35)]">
                 {t.start} →
               </a>
 
-              <a
-                href={TELEGRAM_URL}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 px-7 py-4 font-bold text-white hover:bg-white/5"
-              >
+              <a href={TELEGRAM_URL} className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 px-7 py-4 font-bold text-white hover:bg-white/5">
                 <TelegramIcon /> {t.tg}
               </a>
             </div>
@@ -838,91 +892,68 @@ export default function TokenCashLanding() {
           </div>
           <ExchangeForm t={t} lang={lang} />
         </section>
+
         <section className="mx-auto max-w-7xl px-4 py-10 sm:px-5 sm:py-14">
-  <div className="grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_48%,rgba(139,92,246,.04))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_38px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(139,92,246,.16),transparent_34%),radial-gradient(circle_at_90%_90%,rgba(34,211,238,.10),transparent_32%)]" />
+          <div className="grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_48%,rgba(139,92,246,.04))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_38px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-8">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(139,92,246,.16),transparent_34%),radial-gradient(circle_at_90%_90%,rgba(34,211,238,.10),transparent_32%)]" />
 
-      <div className="relative z-10">
-        <div className="mb-4 inline-flex rounded-full border border-violet-300/20 bg-violet-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-violet-200">
-          {lang === "ru" ? "Индивидуальный курс" : "Custom rate"}
-        </div>
-
-        <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
-          {lang === "ru" ? "Почему курс выгоднее" : "Why the rate is better"}
-        </h2>
-
-        <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
-          {lang === "ru"
-            ? "Мы не показываем один общий курс для всех. Итоговые условия согласуются с менеджером и зависят от города, суммы, направления обмена и доступной ликвидности."
-            : "We do not show one fixed rate for everyone. Final terms are confirmed with a manager and depend on the city, amount, exchange direction, and available liquidity."}
-        </p>
-
-        <div className="mt-7 grid gap-3">
-          {[
-            lang === "ru"
-              ? ["Город и валюта", "Учитываем страну, локальную валюту и доступность выдачи."]
-              : ["City and currency", "We factor in the country, local currency, and payout availability."],
-            lang === "ru"
-              ? ["Сумма обмена", "Для крупных сумм возможны индивидуальные условия."]
-              : ["Exchange amount", "Large amounts may qualify for custom terms."],
-            lang === "ru"
-              ? ["Направление сделки", "Crypto → Cash, Cash → Crypto или Crypto → Crypto рассчитываются отдельно."]
-              : ["Exchange direction", "Crypto → Cash, Cash → Crypto, and Crypto → Crypto are calculated separately."],
-          ].map(([title, text]) => (
-            <div
-              key={title}
-              className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,.06)]"
-            >
-              <div className="font-black text-white">{title}</div>
-              <div className="mt-1 text-sm leading-6 text-zinc-400">{text}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_48%,rgba(34,211,238,.035))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_38px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(255,255,255,.10),transparent_24%),radial-gradient(circle_at_85%_80%,rgba(34,211,238,.12),transparent_34%)]" />
-
-      <div className="relative z-10">
-        <div className="mb-4 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-cyan-100">
-          {lang === "ru" ? "Направления" : "Directions"}
-        </div>
-
-        <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
-          {lang === "ru" ? "Доступные направления обмена" : "Available exchange directions"}
-        </h2>
-
-        <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
-          {lang === "ru"
-            ? "Поддерживаем основные направления обмена для криптовалюты, наличных и популярных стейблкоинов."
-            : "We support key exchange directions for crypto, cash, and popular stablecoins."}
-        </p>
-
-        <div className="mt-7 grid gap-4 sm:grid-cols-2">
-          {[
-            ["Crypto → Cash", lang === "ru" ? "Получение наличных после перевода криптовалюты." : "Receive cash after sending crypto."],
-            ["Cash → Crypto", lang === "ru" ? "Покупка криптовалюты за наличные." : "Buy crypto with cash."],
-            ["Crypto → Crypto", lang === "ru" ? "Обмен между популярными монетами и сетями." : "Swap between popular coins and networks."],
-            ["USDT / BTC / ETH / USDC", lang === "ru" ? "Основные активы для быстрых сделок." : "Main assets for fast transactions."],
-          ].map(([title, text]) => (
-            <div
-              key={title}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.06)] transition hover:-translate-y-1 hover:border-violet-300/30 hover:bg-violet-500/10"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(139,92,246,.14),transparent_32%)] opacity-0 transition group-hover:opacity-100" />
               <div className="relative z-10">
-                <div className="text-lg font-black text-white">{title}</div>
-                <div className="mt-3 text-sm leading-6 text-zinc-400">{text}</div>
+                <div className="mb-4 inline-flex rounded-full border border-violet-300/20 bg-violet-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-violet-200">{lang === "ru" ? "Индивидуальный курс" : "Custom rate"}</div>
+
+                <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">{lang === "ru" ? "Почему курс выгоднее" : "Why the rate is better"}</h2>
+
+                <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
+                  {lang === "ru"
+                    ? "Мы не показываем один общий курс для всех. Итоговые условия согласуются с менеджером и зависят от города, суммы, направления обмена и доступной ликвидности."
+                    : "We do not show one fixed rate for everyone. Final terms are confirmed with a manager and depend on the city, amount, exchange direction, and available liquidity."}
+                </p>
+
+                <div className="mt-7 grid gap-3">
+                  {[
+                    lang === "ru" ? ["Город и валюта", "Учитываем страну, локальную валюту и доступность выдачи."] : ["City and currency", "We factor in the country, local currency, and payout availability."],
+                    lang === "ru" ? ["Сумма обмена", "Для крупных сумм возможны индивидуальные условия."] : ["Exchange amount", "Large amounts may qualify for custom terms."],
+                    lang === "ru" ? ["Направление сделки", "Crypto → Cash, Cash → Crypto или Crypto → Crypto рассчитываются отдельно."] : ["Exchange direction", "Crypto → Cash, Cash → Crypto, and Crypto → Crypto are calculated separately."],
+                  ].map(([title, text]) => (
+                    <div key={title} className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,.06)]">
+                      <div className="font-black text-white">{title}</div>
+                      <div className="mt-1 text-sm leading-6 text-zinc-400">{text}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_48%,rgba(34,211,238,.035))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_38px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-8">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(255,255,255,.10),transparent_24%),radial-gradient(circle_at_85%_80%,rgba(34,211,238,.12),transparent_34%)]" />
+
+              <div className="relative z-10">
+                <div className="mb-4 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-cyan-100">{lang === "ru" ? "Направления" : "Directions"}</div>
+
+                <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">{lang === "ru" ? "Доступные направления обмена" : "Available exchange directions"}</h2>
+
+                <p className="mt-4 max-w-2xl leading-7 text-zinc-400">{lang === "ru" ? "Поддерживаем основные направления обмена для криптовалюты, наличных и популярных стейблкоинов." : "We support key exchange directions for crypto, cash, and popular stablecoins."}</p>
+
+                <div className="mt-7 grid gap-4 sm:grid-cols-2">
+                  {[
+                    ["Crypto → Cash", lang === "ru" ? "Получение наличных после перевода криптовалюты." : "Receive cash after sending crypto."],
+                    ["Cash → Crypto", lang === "ru" ? "Покупка криптовалюты за наличные." : "Buy crypto with cash."],
+                    ["Crypto → Crypto", lang === "ru" ? "Обмен между популярными монетами и сетями." : "Swap between popular coins and networks."],
+                    ["USDT / BTC / ETH / USDC", lang === "ru" ? "Основные активы для быстрых сделок." : "Main assets for fast transactions."],
+                  ].map(([title, text]) => (
+                    <div key={title} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.06)] transition hover:-translate-y-1 hover:border-violet-300/30 hover:bg-violet-500/10">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(139,92,246,.14),transparent_32%)] opacity-0 transition group-hover:opacity-100" />
+                      <div className="relative z-10">
+                        <div className="text-lg font-black text-white">{title}</div>
+                        <div className="mt-3 text-sm leading-6 text-zinc-400">{text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section id="steps" className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20">
           <div className="mb-12">
@@ -936,25 +967,16 @@ export default function TokenCashLanding() {
 
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               {t.steps.map(([num, title, text], index) => (
-                <div
-                  key={num}
-                  className="group relative min-h-[270px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025)_45%,rgba(34,211,238,.035))] p-6 shadow-[0_28px_80px_rgba(0,0,0,.34),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_40px_rgba(0,0,0,.22)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-violet-300/35"
-                >
+                <div key={num} className="group relative min-h-[270px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025)_45%,rgba(34,211,238,.035))] p-6 shadow-[0_28px_80px_rgba(0,0,0,.34),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_40px_rgba(0,0,0,.22)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-violet-300/35">
                   <div className="absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_20%_12%,rgba(255,255,255,.12),transparent_22%),radial-gradient(circle_at_top_left,rgba(139,92,246,.16),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(34,211,238,.12),transparent_32%)] opacity-90" />
 
                   <div className="relative z-10">
                     <div className="mb-6 flex items-center justify-between">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-violet-300/25 bg-gradient-to-br from-violet-500/25 to-cyan-300/15 text-xl shadow-[0_0_25px_rgba(139,92,246,.18)]">
-                        {processIcons[index]}
-                      </div>
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-violet-300/25 bg-gradient-to-br from-violet-500/25 to-cyan-300/15 text-xl shadow-[0_0_25px_rgba(139,92,246,.18)]">{processIcons[index]}</div>
 
-                      <div className="relative hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[.04] text-sm font-black text-white lg:flex">
-                        {num}
-                      </div>
+                      <div className="relative hidden h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[.04] text-sm font-black text-white lg:flex">{num}</div>
 
-                      <div className="rounded-full border border-white/10 bg-white/[.04] px-3 py-1 text-xs font-black text-zinc-300 lg:hidden">
-                        {num}
-                      </div>
+                      <div className="rounded-full border border-white/10 bg-white/[.04] px-3 py-1 text-xs font-black text-zinc-300 lg:hidden">{num}</div>
                     </div>
 
                     <h3 className="text-2xl font-black leading-tight text-white">{title}</h3>
@@ -980,12 +1002,10 @@ export default function TokenCashLanding() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-[1.65fr_.75fr]">
-              <DottedWorldMap lang={lang} onCountrySelect={setOpenCountryCode} />
+              <DottedWorldMap lang={lang} onCountrySelect={setOpenCountryCode} selectedCountryCode={openCountryCode} />
 
               <div id="country-list">
-  <div className="mb-4 text-sm font-bold uppercase tracking-[.18em] text-zinc-500">
-    {t.countryList}
-  </div>
+                <div className="mb-4 text-sm font-bold uppercase tracking-[.18em] text-zinc-500">{t.countryList}</div>
 
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
                   {countryCards.map((c) => (
@@ -1003,36 +1023,24 @@ export default function TokenCashLanding() {
                     >
                       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
                         <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
-                        <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">
-                          {c.fiat}
-                        </span>
+                        <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
                         <span className="text-sm text-zinc-400 transition group-open:rotate-180">⌄</span>
                       </summary>
 
                       {c.cities.length > 0 ? (
                         <div className="border-t border-white/10 px-4 pb-4 pt-3">
-                          <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">
-                            {formatCityCount(c.cities.length, lang)}
-                          </div>
+                          <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
 
                           <div className="grid max-h-[280px] gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
                             {c.cities.map((city) => (
-                              <a
-                                key={city}
-                                href={TELEGRAM_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white"
-                              >
+                              <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
                                 {city}
                               </a>
                             ))}
                           </div>
                         </div>
                       ) : (
-                        <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">
-                          {lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}
-                        </div>
+                        <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
                       )}
                     </details>
                   ))}
@@ -1047,13 +1055,8 @@ export default function TokenCashLanding() {
 
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {t.benefits.map(([icon, title, text]) => (
-              <div
-                key={title}
-                className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_46%,rgba(34,211,238,.035))] p-7 shadow-[0_24px_70px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-16px_34px_rgba(0,0,0,.22)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-violet-300/30"
-              >
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 text-xl">
-                  {icon}
-                </div>
+              <div key={title} className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_46%,rgba(34,211,238,.035))] p-7 shadow-[0_24px_70px_rgba(0,0,0,.30),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-16px_34px_rgba(0,0,0,.22)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-violet-300/30">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 text-xl">{icon}</div>
                 <h3 className="text-xl font-black">{title}</h3>
                 <p className="mt-3 leading-7 text-zinc-400">{text}</p>
               </div>
@@ -1066,19 +1069,11 @@ export default function TokenCashLanding() {
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{t.reviewsTitle}</h2>
 
             <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => document.querySelector("#reviews-track")?.scrollBy({ left: -440, behavior: "smooth" })}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[.06] text-white"
-              >
+              <button type="button" onClick={() => document.querySelector("#reviews-track")?.scrollBy({ left: -440, behavior: "smooth" })} className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[.06] text-white">
                 ←
               </button>
 
-              <button
-                type="button"
-                onClick={() => document.querySelector("#reviews-track")?.scrollBy({ left: 440, behavior: "smooth" })}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[.06] text-white"
-              >
+              <button type="button" onClick={() => document.querySelector("#reviews-track")?.scrollBy({ left: 440, behavior: "smooth" })} className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[.06] text-white">
                 →
               </button>
             </div>
@@ -1086,10 +1081,7 @@ export default function TokenCashLanding() {
 
           <div id="reviews-track" className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {t.reviews.map(([name, text], i) => (
-              <div
-                key={name}
-                className="relative min-h-[260px] w-[82vw] shrink-0 snap-center overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_46%,rgba(139,92,246,.04))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.32),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-16px_34px_rgba(0,0,0,.22)] backdrop-blur-xl sm:w-[420px]"
-              >
+              <div key={name} className="relative min-h-[260px] w-[82vw] shrink-0 snap-center overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)_46%,rgba(139,92,246,.04))] p-7 shadow-[0_24px_80px_rgba(0,0,0,.32),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-16px_34px_rgba(0,0,0,.22)] backdrop-blur-xl sm:w-[420px]">
                 <div className="mb-5 flex items-center justify-between">
                   <div className="text-yellow-300">★★★★★</div>
                   <div className="rounded-full bg-violet-500/10 px-3 py-1 text-xs text-violet-200">0{i + 1}</div>
@@ -1130,17 +1122,11 @@ export default function TokenCashLanding() {
               <p className="mx-auto mt-5 max-w-2xl text-zinc-300">{t.finalText}</p>
 
               <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-                <a
-                  href={TELEGRAM_URL}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-7 py-4 font-bold text-white shadow-[0_0_42px_rgba(139,92,246,.32)] transition hover:brightness-110"
-                >
+                <a href={TELEGRAM_URL} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-7 py-4 font-bold text-white shadow-[0_0_42px_rgba(139,92,246,.32)] transition hover:brightness-110">
                   <TelegramIcon /> {TELEGRAM_HANDLE}
                 </a>
 
-                <a
-                  href="#exchange"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 px-7 py-4 font-bold text-white transition hover:bg-white/[.06]"
-                >
+                <a href="#exchange" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 px-7 py-4 font-bold text-white transition hover:bg-white/[.06]">
                   {t.start}
                 </a>
               </div>
@@ -1149,10 +1135,7 @@ export default function TokenCashLanding() {
         </section>
       </main>
 
-      <a
-        href={TELEGRAM_URL}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-violet-500 text-white shadow-[0_0_45px_rgba(139,92,246,.5)]"
-      >
+      <a href={TELEGRAM_URL} className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-violet-500 text-white shadow-[0_0_45px_rgba(139,92,246,.5)]">
         <TelegramIcon className="h-7 w-7" />
       </a>
 
