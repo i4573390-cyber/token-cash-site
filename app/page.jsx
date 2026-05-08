@@ -432,14 +432,14 @@ function RotatingOrb() {
   );
 }
 
-function CustomSelect({ value, options, onChange, className = "" }) {
-  const [open, setOpen] = useState(false);
+function CustomSelect({ value, options, onChange, name, openName, setOpenName, className = "" }) {
+  const open = openName === name;
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${open ? "z-[300]" : "z-[30]"} ${className}`}>
       <button
         type="button"
-        onClick={() => setOpen((state) => !state)}
+        onClick={() => setOpenName(open ? null : name)}
         className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-black/25 p-2 text-left text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.07)] transition hover:border-violet-300/35 hover:bg-white/[.06]"
       >
         <span>{value}</span>
@@ -448,19 +448,26 @@ function CustomSelect({ value, options, onChange, className = "" }) {
 
       {open && (
         <>
-          <button type="button" aria-label="Close select" onClick={() => setOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
+          <button
+            type="button"
+            aria-label="Close select"
+            onClick={() => setOpenName(null)}
+            className="fixed inset-0 z-[250] cursor-default bg-transparent"
+          />
 
-          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[260px] overflow-y-auto rounded-2xl border border-white/10 bg-[#12101c]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.7)_rgba(255,255,255,.06)]">
+          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-[350] max-h-[260px] overflow-y-auto rounded-2xl border border-white/10 bg-[#12101c]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.7)_rgba(255,255,255,.06)]">
             {options.map((option) => (
               <button
                 key={option}
                 type="button"
                 onClick={() => {
                   onChange(option);
-                  setOpen(false);
+                  setOpenName(null);
                 }}
                 className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-bold transition ${
-                  option === value ? "bg-gradient-to-r from-violet-500/75 to-cyan-300/50 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+                  option === value
+                    ? "bg-gradient-to-r from-violet-500/75 to-cyan-300/50 text-white"
+                    : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
                 }`}
               >
                 <span>{option}</span>
@@ -473,7 +480,6 @@ function CustomSelect({ value, options, onChange, className = "" }) {
     </div>
   );
 }
-
 function ExchangeForm({ t, lang }) {
   const [countryCode, setCountryCode] = useState("AM");
   const [countryOpen, setCountryOpen] = useState(false);
@@ -481,7 +487,7 @@ function ExchangeForm({ t, lang }) {
   const [receive, setReceive] = useState("AMD");
   const [amount, setAmount] = useState("1000");
   const [marketUsdRates, setMarketUsdRates] = useState(fallbackUsdRates);
-
+  const [selectOpen, setSelectOpen] = useState(null);
   useEffect(() => {
     let isMounted = true;
 
@@ -565,7 +571,15 @@ function ExchangeForm({ t, lang }) {
           <label className="mb-2 block text-xs text-zinc-500">{t.give}</label>
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <input className="w-full bg-transparent text-xl font-semibold text-white outline-none" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" />
-            <CustomSelect className="mt-3" value={give} options={currencies} onChange={setGive} />
+            <CustomSelect
+  className="mt-3"
+  name="give"
+  value={give}
+  options={currencies}
+  onChange={setGive}
+  openName={selectOpen}
+  setOpenName={setSelectOpen}
+/>
           </div>
         </div>
 
@@ -573,7 +587,15 @@ function ExchangeForm({ t, lang }) {
           <label className="mb-2 block text-xs text-zinc-500">{t.receive}</label>
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-white">{formatted}</div>
-            <CustomSelect className="mt-3" value={receive} options={currencies} onChange={setReceive} />
+            <CustomSelect
+  className="mt-3"
+  name="receive"
+  value={receive}
+  options={currencies}
+  onChange={setReceive}
+  openName={selectOpen}
+  setOpenName={setSelectOpen}
+/>
           </div>
         </div>
       </div>
