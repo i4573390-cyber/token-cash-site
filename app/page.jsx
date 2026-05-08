@@ -436,7 +436,7 @@ function CustomSelect({ value, options, onChange, name, openName, setOpenName, c
   const open = openName === name;
 
   return (
-    <div className={`relative ${open ? "z-[300]" : "z-[30]"} ${className}`}>
+    <div className={`relative ${className}`}>
       <button
         type="button"
         onClick={() => setOpenName(open ? null : name)}
@@ -447,35 +447,26 @@ function CustomSelect({ value, options, onChange, name, openName, setOpenName, c
       </button>
 
       {open && (
-        <>
-          <button
-            type="button"
-            aria-label="Close select"
-            onClick={() => setOpenName(null)}
-            className="fixed inset-0 z-[250] cursor-default bg-transparent"
-          />
-
-          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-[350] max-h-[260px] overflow-y-auto rounded-2xl border border-white/10 bg-[#12101c]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,.55),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.7)_rgba(255,255,255,.06)]">
-            {options.map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => {
-                  onChange(option);
-                  setOpenName(null);
-                }}
-                className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-bold transition ${
-                  option === value
-                    ? "bg-gradient-to-r from-violet-500/75 to-cyan-300/50 text-white"
-                    : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
-                }`}
-              >
-                <span>{option}</span>
-                {option === value && <span className="text-xs text-white/80">✓</span>}
-              </button>
-            ))}
-          </div>
-        </>
+        <div className="mt-2 max-h-[230px] overflow-y-auto rounded-2xl border border-white/10 bg-[#12101c]/95 p-2 shadow-[0_18px_50px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.7)_rgba(255,255,255,.06)]">
+          {options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => {
+                onChange(option);
+                setOpenName(null);
+              }}
+              className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-bold transition ${
+                option === value
+                  ? "bg-gradient-to-r from-violet-500/75 to-cyan-300/50 text-white"
+                  : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+              }`}
+            >
+              <span>{option}</span>
+              {option === value && <span className="text-xs text-white/80">✓</span>}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );
