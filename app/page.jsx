@@ -11,65 +11,132 @@ const countries = [
   { ru: "Россия", en: "Russia", code: "RU", fiat: "RUB", markup: 1.027 },
 ];
 
-const exchangeCities = [
-  { ru: "Архангельск", en: "Arkhangelsk" },
-  { ru: "Балашиха", en: "Balashikha" },
-  { ru: "Барнаул", en: "Barnaul" },
-  { ru: "Белгород", en: "Belgorod" },
-  { ru: "Брянск", en: "Bryansk" },
-  { ru: "Владивосток", en: "Vladivostok" },
-  { ru: "Волгоград", en: "Volgograd" },
-  { ru: "Воронеж", en: "Voronezh" },
-  { ru: "Екатеринбург", en: "Yekaterinburg" },
-  { ru: "Иваново", en: "Ivanovo" },
-  { ru: "Ижевск", en: "Izhevsk" },
-  { ru: "Иркутск", en: "Irkutsk" },
-  { ru: "Казань", en: "Kazan" },
-  { ru: "Калининград", en: "Kaliningrad" },
-  { ru: "Кемерово", en: "Kemerovo" },
-  { ru: "Киров", en: "Kirov" },
-  { ru: "Краснодар", en: "Krasnodar" },
-  { ru: "Красноярск", en: "Krasnoyarsk" },
-  { ru: "Курск", en: "Kursk" },
-  { ru: "Липецк", en: "Lipetsk" },
-  { ru: "Магнитогорск", en: "Magnitogorsk" },
-  { ru: "Махачкала", en: "Makhachkala" },
-  { ru: "Москва", en: "Moscow" },
-  { ru: "Набережные Челны", en: "Naberezhnye Chelny" },
-  { ru: "Нижний Новгород", en: "Nizhny Novgorod" },
-  { ru: "Нижний Тагил", en: "Nizhny Tagil" },
-  { ru: "Новосибирск", en: "Novosibirsk" },
-  { ru: "Омск", en: "Omsk" },
-  { ru: "Оренбург", en: "Orenburg" },
-  { ru: "Пенза", en: "Penza" },
-  { ru: "Пермь", en: "Perm" },
-  { ru: "Ростов-на-Дону", en: "Rostov-on-Don" },
-  { ru: "Самара", en: "Samara" },
-  { ru: "Санкт-Петербург", en: "Saint Petersburg" },
-  { ru: "Саратов", en: "Saratov" },
-  { ru: "Севастополь", en: "Sevastopol" },
-  { ru: "Сочи", en: "Sochi" },
-  { ru: "Ставрополь", en: "Stavropol" },
-  { ru: "Сургут", en: "Surgut" },
-  { ru: "Тверь", en: "Tver" },
-  { ru: "Тольятти", en: "Tolyatti" },
-  { ru: "Томск", en: "Tomsk" },
-  { ru: "Тула", en: "Tula" },
-  { ru: "Тюмень", en: "Tyumen" },
-  { ru: "Ульяновск", en: "Ulyanovsk" },
-  { ru: "Уфа", en: "Ufa" },
-  { ru: "Хабаровск", en: "Khabarovsk" },
-  { ru: "Чебоксары", en: "Cheboksary" },
-  { ru: "Челябинск", en: "Chelyabinsk" },
-  { ru: "Ярославль", en: "Yaroslavl" },
-];
-
 const countryCities = {
-  RU: exchangeCities.map((city) => city.ru),
+  RU: [
+    "Архангельск",
+    "Балашиха",
+    "Барнаул",
+    "Белгород",
+    "Брянск",
+    "Великий Новгород",
+    "Владивосток",
+    "Владимир",
+    "Волгоград",
+    "Вологда",
+    "Воронеж",
+    "Екатеринбург",
+    "Иваново",
+    "Ижевск",
+    "Иркутск",
+    "Казань",
+    "Калининград",
+    "Калуга",
+    "Кемерово",
+    "Киров",
+    "Кострома",
+    "Краснодар",
+    "Красноярск",
+    "Курск",
+    "Липецк",
+    "Магнитогорск",
+    "Махачкала",
+    "Москва",
+    "Набережные Челны",
+    "Нижний Новгород",
+    "Нижний Тагил",
+    "Новосибирск",
+    "Омск",
+    "Оренбург",
+    "Пенза",
+    "Пермь",
+    "Ростов-на-Дону",
+    "Рязань",
+    "Самара",
+    "Санкт-Петербург",
+    "Саранск",
+    "Саратов",
+    "Севастополь",
+    "Смоленск",
+    "Сочи",
+    "Ставрополь",
+    "Сургут",
+    "Тамбов",
+    "Тверь",
+    "Тольятти",
+    "Томск",
+    "Тула",
+    "Тюмень",
+    "Ульяновск",
+    "Уфа",
+    "Хабаровск",
+    "Чебоксары",
+    "Челябинск",
+    "Ярославль",
+  ],
 };
 
 const countryCitiesEn = {
-  RU: exchangeCities.map((city) => city.en),
+  RU: [
+    "Arkhangelsk",
+    "Balashikha",
+    "Barnaul",
+    "Belgorod",
+    "Bryansk",
+    "Veliky Novgorod",
+    "Vladivostok",
+    "Vladimir",
+    "Volgograd",
+    "Vologda",
+    "Voronezh",
+    "Yekaterinburg",
+    "Ivanovo",
+    "Izhevsk",
+    "Irkutsk",
+    "Kazan",
+    "Kaliningrad",
+    "Kaluga",
+    "Kemerovo",
+    "Kirov",
+    "Kostroma",
+    "Krasnodar",
+    "Krasnoyarsk",
+    "Kursk",
+    "Lipetsk",
+    "Magnitogorsk",
+    "Makhachkala",
+    "Moscow",
+    "Naberezhnye Chelny",
+    "Nizhny Novgorod",
+    "Nizhny Tagil",
+    "Novosibirsk",
+    "Omsk",
+    "Orenburg",
+    "Penza",
+    "Perm",
+    "Rostov-on-Don",
+    "Ryazan",
+    "Samara",
+    "Saint Petersburg",
+    "Saransk",
+    "Saratov",
+    "Sevastopol",
+    "Smolensk",
+    "Sochi",
+    "Stavropol",
+    "Surgut",
+    "Tambov",
+    "Tver",
+    "Tolyatti",
+    "Tomsk",
+    "Tula",
+    "Tyumen",
+    "Ulyanovsk",
+    "Ufa",
+    "Khabarovsk",
+    "Cheboksary",
+    "Chelyabinsk",
+    "Yaroslavl",
+  ],
 };
 
 const activeMapCountries = [
@@ -83,7 +150,6 @@ const currencies = [...crypto, ...fiat];
 const fallbackUsdRates = {
   USDT: 1,
   USDC: 1,
-  USD: 1,
   BTC: 68000,
   ETH: 3200,
   BNB: 580,
@@ -94,10 +160,8 @@ const fallbackUsdRates = {
   IDR: 0.000061,
   INR: 0.012,
   KGS: 0.0114,
-  EUR: 1.08,
   KZT: 0.0021,
   RUB: 0.0108,
-  TRY: 0.031,
   THB: 0.0275,
   UZS: 0.000079,
 };
@@ -158,18 +222,14 @@ const content = {
     tg: "Написать в Telegram",
     formSmall: "Заявка на обмен",
     formTitle: "Оформить сделку",
-    country: "Город обмена",
+    country: "Город / страна обмена",
     give: "Вы отдаёте",
     receive: "Вы получаете",
     submit: "Зафиксировать курс",
-    rateNotice: "Курс предварительный и может измениться до финального подтверждения менеджером. Итоговые условия зависят от города, суммы и направления обмена.",
     stepsTitle: "Как проходит обмен",
     benefitsTitle: "Почему выбирают Token Cash",
     countriesTitle: "Города Token Cash в России",
-    countriesText: "Token Cash работает через офисы в городах России из списка ниже. В каждом городе есть офис обслуживания, а в отдельных городах работает несколько филиалов. Выберите город, направление обмена и свяжитесь с менеджером для согласования курса и времени визита.",
-    officeNoteTitle: "Офисы и адреса",
-    officeNoteText: "Token Cash обслуживает клиентов в офисах по фактическим адресам. Адрес конкретного филиала направляется после подтверждения заявки, суммы и времени визита — это нужно для безопасности клиентов, кассовых операций, подготовки нужной суммы и распределения потока между филиалами. Сделка проходит в офисе, не дистанционно и не на выезде.",
-    officeNoteItems: ["Офис есть в каждом городе из списка", "В некоторых городах работает несколько филиалов", "Адрес филиала выдаётся после подтверждения заявки"],
+    countriesText: "Token Cash работает в России. Выберите город, направление обмена и свяжитесь с менеджером для согласования курса и времени визита в офис.",
     countryList: "Города присутствия",
     reviewsTitle: "Отзывы клиентов",
     faqTitle: "Вопросы и ответы",
@@ -178,7 +238,7 @@ const content = {
     steps: [
       ["01", "Оставьте заявку", "Выберите город, направление обмена и сумму. Затем напишите менеджеру в Telegram."],
       ["02", "Подтвердите условия", "Менеджер согласует курс, доступность направления и удобное время визита."],
-      ["03", "Приезжайте в офис", "После подтверждения заявки менеджер направит адрес подходящего филиала и детали визита."],
+      ["03", "Приезжайте в офис", "Адрес и детали визита отправляются после подтверждения заявки."],
       ["04", "Проведите обмен", "Сделка завершается на месте: наличные или криптовалюта передаются после проверки."],
     ],
     benefits: [
@@ -201,8 +261,8 @@ const content = {
     ],
     faq: [
       ["Нужно ли отправлять деньги заранее?", "Нет. Условия подтверждаются менеджером, обмен проводится в согласованном формате."],
-      ["Как фиксируется курс?", "Курс подтверждается менеджером перед визитом. Финальные условия зависят от суммы, города и направления."],
-      ["Где находится офис?", "Офисы Token Cash работают по фактическим адресам в городах из списка. Адрес конкретного филиала менеджер направляет после подтверждения заявки, суммы и времени визита — это помогает подготовить нужную сумму, выбрать подходящий офис и сохранить безопасность клиента."],
+      ["Как фиксируется курс?", "Курс подтверждается менеджером перед визитом. Финальные условия зависят от суммы, страны и направления."],
+      ["Где находится офис?", "Точный адрес отправляется в Telegram после согласования заявки и времени визита."],
       ["Какие города доступны?", "Token Cash работает в городах России из списка на сайте. Выберите нужный город и напишите менеджеру для согласования деталей визита."],
       ["Какие валюты поддерживаются?", "Фиат: RUB, USD, EUR, KZT, TRY, AED, THB. Крипта: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
@@ -217,18 +277,14 @@ const content = {
     tg: "Message Telegram",
     formSmall: "Exchange request",
     formTitle: "Create request",
-    country: "Exchange city",
+    country: "Exchange city / country",
     give: "You send",
     receive: "You receive",
     submit: "Lock the rate",
-    rateNotice: "The displayed rate is preliminary and may change before final confirmation by the manager. Final terms depend on city, amount and exchange direction.",
     stepsTitle: "How exchange works",
     benefitsTitle: "Why choose Token Cash",
     countriesTitle: "Token Cash cities in Russia",
-    countriesText: "Token Cash operates through offices in the Russian cities listed below. Each listed city has an office, and several cities have multiple branches. Select a city, exchange direction and contact a manager to confirm the rate and visit time.",
-    officeNoteTitle: "Offices and addresses",
-    officeNoteText: "Token Cash serves clients at physical office addresses. The address of the specific branch is shared after the request, amount and visit time are confirmed — this is required for client safety, cash handling, preparation of the required amount and routing clients between branches. The transaction is completed in office, not remotely or on-site outside the office.",
-    officeNoteItems: ["There is an office in every listed city", "Some cities have several branches", "The branch address is shared after request confirmation"],
+    countriesText: "Token Cash operates in Russia. Select a city, exchange direction and contact a manager to confirm the rate and office visit time.",
     countryList: "Available cities",
     reviewsTitle: "Client reviews",
     faqTitle: "Questions and answers",
@@ -237,7 +293,7 @@ const content = {
     steps: [
       ["01", "Submit request", "Choose city, exchange direction and amount. Then contact a manager on Telegram."],
       ["02", "Confirm terms", "Manager confirms rate, availability and convenient visit time."],
-      ["03", "Visit office", "After the request is confirmed, the manager sends the address of the suitable branch and visit details."],
+      ["03", "Visit office", "Office address and visit details are sent after confirmation."],
       ["04", "Complete exchange", "The transaction is completed in office after verification."],
     ],
     benefits: [
@@ -260,8 +316,8 @@ const content = {
     ],
     faq: [
       ["Do I need to send funds in advance?", "No. Terms are confirmed by a manager and exchange is completed as agreed."],
-      ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, city and exchange direction."],
-      ["Where is the office located?", "Token Cash offices operate at physical addresses in the listed cities. The manager sends the address of the specific branch after the request, amount and visit time are confirmed — this helps prepare the required amount, choose the suitable office and maintain client safety."],
+      ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, country and exchange direction."],
+      ["Where is the office located?", "The exact address is sent in Telegram after request and visit time are confirmed."],
       ["Which cities are available?", "Token Cash operates in Russian cities listed on the website. Select your city and contact a manager to confirm visit details."],
       ["Which currencies are supported?", "Fiat: RUB, USD, EUR, KZT, TRY, AED, THB. Crypto: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
@@ -290,11 +346,6 @@ function formatCityCount(count, lang) {
   if (lastDigit === 1 && lastTwoDigits !== 11) return `${count} город`;
   if ([2, 3, 4].includes(lastDigit) && ![12, 13, 14].includes(lastTwoDigits)) return `${count} города`;
   return `${count} городов`;
-}
-
-function getCityRateModifier(cityIndex) {
-  const centerIndex = (exchangeCities.length - 1) / 2;
-  return 1 + (cityIndex - centerIndex) * 0.00045;
 }
 
 function TelegramIcon({ className = "h-5 w-5" }) {
@@ -439,15 +490,13 @@ function CustomSelect({ value, options, onChange, name, openName, setOpenName, c
   );
 }
 function ExchangeForm({ t, lang }) {
-  const moscowIndex = exchangeCities.findIndex((city) => city.ru === "Москва");
-  const [cityIndex, setCityIndex] = useState(moscowIndex >= 0 ? moscowIndex : 0);
-  const [cityOpen, setCityOpen] = useState(false);
+  const [countryCode, setCountryCode] = useState("RU");
+  const [countryOpen, setCountryOpen] = useState(false);
   const [give, setGive] = useState("USDT");
   const [receive, setReceive] = useState("RUB");
   const [amount, setAmount] = useState("1000");
   const [marketUsdRates, setMarketUsdRates] = useState(fallbackUsdRates);
   const [selectOpen, setSelectOpen] = useState(null);
-
   useEffect(() => {
     let isMounted = true;
 
@@ -465,14 +514,18 @@ function ExchangeForm({ t, lang }) {
     };
   }, []);
 
-  const selectedCity = exchangeCities[cityIndex] || exchangeCities[0];
-  const baseMarkup = countries[0]?.markup || 1;
-  const markup = baseMarkup * getCityRateModifier(cityIndex);
+  const country = countries.find((c) => c.code === countryCode) || countries[0];
   const numericAmount = Number(String(amount).replace(",", ".")) || 0;
   const marketRate = marketUsdRates[give] && marketUsdRates[receive] ? marketUsdRates[give] / marketUsdRates[receive] : 0;
-  const clientRate = marketRate * markup;
+  const clientRate = marketRate * country.markup;
   const result = numericAmount * clientRate;
   const formatted = result > 0 ? result.toLocaleString(lang === "ru" ? "ru-RU" : "en-US", { maximumFractionDigits: result > 100 ? 2 : 6 }) : "—";
+
+  function changeCountry(value) {
+    setCountryCode(value);
+    const next = countries.find((c) => c.code === value);
+    if (next) setReceive(next.fiat);
+  }
 
   return (
     <div className="relative overflow-visible rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025)_45%,rgba(34,211,238,.035))] p-4 shadow-[0_28px_90px_rgba(0,0,0,.36),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_40px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-5">
@@ -488,32 +541,33 @@ function ExchangeForm({ t, lang }) {
       <div className="relative z-30 mb-4">
         <button
           type="button"
-          onClick={() => setCityOpen((value) => !value)}
+          onClick={() => setCountryOpen((value) => !value)}
           className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[.055] px-4 py-3 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10),inset_0_-10px_22px_rgba(0,0,0,.18)] outline-none backdrop-blur-xl transition hover:border-violet-300/30"
         >
           <span className="font-semibold">
-            {lang === "ru" ? selectedCity.ru : selectedCity.en}
+            {lang === "ru" ? country.ru : country.en} · {country.fiat}
           </span>
-          <span className={`text-zinc-300 transition ${cityOpen ? "rotate-180" : ""}`}>⌄</span>
+          <span className={`text-zinc-300 transition ${countryOpen ? "rotate-180" : ""}`}>⌄</span>
         </button>
 
-        {cityOpen && (
+        {countryOpen && (
           <>
-            <button type="button" aria-label="Close city select" onClick={() => setCityOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
-            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[320px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
-              {exchangeCities.map((city, index) => (
+            <button type="button" aria-label="Close country select" onClick={() => setCountryOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
+            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[280px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl">
+              {countries.map((c) => (
                 <button
-                  key={city.ru}
+                  key={c.code}
                   type="button"
                   onClick={() => {
-                    setCityIndex(index);
-                    setCityOpen(false);
+                    changeCountry(c.code);
+                    setCountryOpen(false);
                   }}
                   className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${
-                    index === cityIndex ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+                    c.code === countryCode ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
                   }`}
                 >
-                  <span className="font-bold">{lang === "ru" ? city.ru : city.en}</span>
+                  <span className="font-bold">{lang === "ru" ? c.ru : c.en}</span>
+                  <span className="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-bold text-violet-100">{c.fiat}</span>
                 </button>
               ))}
             </div>
@@ -527,14 +581,14 @@ function ExchangeForm({ t, lang }) {
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <input className="w-full bg-transparent text-xl font-semibold text-white outline-none" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" />
             <CustomSelect
-              className="mt-3"
-              name="give"
-              value={give}
-              options={currencies}
-              onChange={setGive}
-              openName={selectOpen}
-              setOpenName={setSelectOpen}
-            />
+  className="mt-3"
+  name="give"
+  value={give}
+  options={currencies}
+  onChange={setGive}
+  openName={selectOpen}
+  setOpenName={setSelectOpen}
+/>
           </div>
         </div>
 
@@ -543,20 +597,16 @@ function ExchangeForm({ t, lang }) {
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-white">{formatted}</div>
             <CustomSelect
-              className="mt-3"
-              name="receive"
-              value={receive}
-              options={currencies}
-              onChange={setReceive}
-              openName={selectOpen}
-              setOpenName={setSelectOpen}
-            />
+  className="mt-3"
+  name="receive"
+  value={receive}
+  options={currencies}
+  onChange={setReceive}
+  openName={selectOpen}
+  setOpenName={setSelectOpen}
+/>
           </div>
         </div>
-      </div>
-
-      <div className="relative z-10 mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/[.055] px-4 py-3 text-xs leading-5 text-amber-100/85">
-        {t.rateNotice}
       </div>
 
       <a href={TELEGRAM_URL} className="mt-5 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-5 py-4 font-bold text-white shadow-[0_0_40px_rgba(139,92,246,.35)] transition hover:brightness-110">
@@ -975,21 +1025,6 @@ export default function TokenCashLanding() {
               <div>
                 <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{t.countriesTitle}</h2>
                 <p className="mt-4 max-w-2xl text-zinc-400">{t.countriesText}</p>
-
-                <div className="mt-5 max-w-3xl rounded-2xl border border-cyan-300/15 bg-cyan-300/[.055] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
-                  <div className="mb-2 flex items-center gap-2 text-sm font-black text-cyan-100">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-300/10">🏢</span>
-                    {t.officeNoteTitle}
-                  </div>
-                  <p className="text-sm leading-6 text-zinc-300">{t.officeNoteText}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {t.officeNoteItems.map((item) => (
-                      <span key={item} className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs font-bold text-zinc-200">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               <a href="#exchange" className="inline-flex w-fit items-center gap-2 rounded-2xl bg-violet-500 px-6 py-4 font-bold">
@@ -1003,33 +1038,44 @@ export default function TokenCashLanding() {
               <div id="country-list">
                 <div className="mb-4 text-sm font-bold uppercase tracking-[.18em] text-zinc-500">{t.countryList}</div>
 
-                {countryCards.map((c) => (
-                  <div
-                    key={c.code}
-                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[.045] shadow-[0_16px_38px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl"
-                  >
-                    <div className="flex items-center justify-between gap-3 px-4 py-3">
-                      <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
-                      <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
-                    </div>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  {countryCards.map((c) => (
+                    <details
+                      key={c.code}
+                      open={openCountryCode === c.code}
+                      onToggle={(event) => {
+                        if (event.currentTarget.open) {
+                          setOpenCountryCode(c.code);
+                        } else if (openCountryCode === c.code) {
+                          setOpenCountryCode(null);
+                        }
+                      }}
+                      className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[.045] shadow-[0_16px_38px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl transition hover:border-violet-300/25"
+                    >
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+                        <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
+                        <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
+                        <span className="text-sm text-zinc-400 transition group-open:rotate-180">⌄</span>
+                      </summary>
 
-                    {c.cities.length > 0 ? (
-                      <div className="border-t border-white/10 px-4 pb-4 pt-3">
-                        <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
+                      {c.cities.length > 0 ? (
+                        <div className="border-t border-white/10 px-4 pb-4 pt-3">
+                          <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
 
-                        <div className="grid max-h-[420px] gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
-                          {c.cities.map((city) => (
-                            <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
-                              {city}
-                            </a>
-                          ))}
+                          <div className="grid max-h-[360px] grid-cols-1 gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)] sm:max-h-[420px] sm:grid-cols-2 lg:max-h-[520px] lg:grid-cols-1">
+                            {c.cities.map((city) => (
+                              <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
+                                {city}
+                              </a>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
-                    )}
-                  </div>
-                ))}
+                      ) : (
+                        <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
+                      )}
+                    </details>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
