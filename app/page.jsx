@@ -162,6 +162,7 @@ const content = {
     give: "Вы отдаёте",
     receive: "Вы получаете",
     submit: "Зафиксировать курс",
+    rateNotice: "Курс предварительный и может измениться до финального подтверждения менеджером. Итоговые условия зависят от города, суммы и направления обмена.",
     stepsTitle: "Как проходит обмен",
     benefitsTitle: "Почему выбирают Token Cash",
     countriesTitle: "Города Token Cash в России",
@@ -217,6 +218,7 @@ const content = {
     give: "You send",
     receive: "You receive",
     submit: "Lock the rate",
+    rateNotice: "The displayed rate is preliminary and may change before final confirmation by the manager. Final terms depend on city, amount and exchange direction.",
     stepsTitle: "How exchange works",
     benefitsTitle: "Why choose Token Cash",
     countriesTitle: "Token Cash cities in Russia",
@@ -282,6 +284,11 @@ function formatCityCount(count, lang) {
   if (lastDigit === 1 && lastTwoDigits !== 11) return `${count} город`;
   if ([2, 3, 4].includes(lastDigit) && ![12, 13, 14].includes(lastTwoDigits)) return `${count} города`;
   return `${count} городов`;
+}
+
+function getCityRateModifier(cityIndex) {
+  const centerIndex = (exchangeCities.length - 1) / 2;
+  return 1 + (cityIndex - centerIndex) * 0.00045;
 }
 
 function TelegramIcon({ className = "h-5 w-5" }) {
@@ -453,7 +460,8 @@ function ExchangeForm({ t, lang }) {
   }, []);
 
   const selectedCity = exchangeCities[cityIndex] || exchangeCities[0];
-  const markup = countries[0]?.markup || 1;
+  const baseMarkup = countries[0]?.markup || 1;
+  const markup = baseMarkup * getCityRateModifier(cityIndex);
   const numericAmount = Number(String(amount).replace(",", ".")) || 0;
   const marketRate = marketUsdRates[give] && marketUsdRates[receive] ? marketUsdRates[give] / marketUsdRates[receive] : 0;
   const clientRate = marketRate * markup;
@@ -539,6 +547,10 @@ function ExchangeForm({ t, lang }) {
             />
           </div>
         </div>
+      </div>
+
+      <div className="relative z-10 mt-3 rounded-2xl border border-amber-300/15 bg-amber-300/[.055] px-4 py-3 text-xs leading-5 text-amber-100/85">
+        {t.rateNotice}
       </div>
 
       <a href={TELEGRAM_URL} className="mt-5 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-violet-400 to-cyan-300 px-5 py-4 font-bold text-white shadow-[0_0_40px_rgba(139,92,246,.35)] transition hover:brightness-110">
@@ -970,44 +982,33 @@ export default function TokenCashLanding() {
               <div id="country-list">
                 <div className="mb-4 text-sm font-bold uppercase tracking-[.18em] text-zinc-500">{t.countryList}</div>
 
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  {countryCards.map((c) => (
-                    <details
-                      key={c.code}
-                      open={openCountryCode === c.code}
-                      onToggle={(event) => {
-                        if (event.currentTarget.open) {
-                          setOpenCountryCode(c.code);
-                        } else if (openCountryCode === c.code) {
-                          setOpenCountryCode(null);
-                        }
-                      }}
-                      className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[.045] shadow-[0_16px_38px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl transition hover:border-violet-300/25"
-                    >
-                      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
-                        <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
-                        <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
-                        <span className="text-sm text-zinc-400 transition group-open:rotate-180">⌄</span>
-                      </summary>
+                {countryCards.map((c) => (
+                  <div
+                    key={c.code}
+                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[.045] shadow-[0_16px_38px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl"
+                  >
+                    <div className="flex items-center justify-between gap-3 px-4 py-3">
+                      <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
+                      <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
+                    </div>
 
-                      {c.cities.length > 0 ? (
-                        <div className="border-t border-white/10 px-4 pb-4 pt-3">
-                          <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
+                    {c.cities.length > 0 ? (
+                      <div className="border-t border-white/10 px-4 pb-4 pt-3">
+                        <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
 
-                          <div className="grid max-h-[280px] gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
-                            {c.cities.map((city) => (
-                              <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
-                                {city}
-                              </a>
-                            ))}
-                          </div>
+                        <div className="grid max-h-[420px] gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
+                          {c.cities.map((city) => (
+                            <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
+                              {city}
+                            </a>
+                          ))}
                         </div>
-                      ) : (
-                        <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
-                      )}
-                    </details>
-                  ))}
-                </div>
+                      </div>
+                    ) : (
+                      <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
