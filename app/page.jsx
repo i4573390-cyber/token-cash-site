@@ -166,7 +166,10 @@ const content = {
     stepsTitle: "Как проходит обмен",
     benefitsTitle: "Почему выбирают Token Cash",
     countriesTitle: "Города Token Cash в России",
-    countriesText: "Token Cash работает в России. Выберите город, направление обмена и свяжитесь с менеджером для согласования курса и времени визита в офис.",
+    countriesText: "Token Cash работает через офисы в городах России из списка ниже. В каждом городе есть офис обслуживания, а в отдельных городах работает несколько филиалов. Выберите город, направление обмена и свяжитесь с менеджером для согласования курса и времени визита.",
+    officeNoteTitle: "Офисы и адреса",
+    officeNoteText: "Token Cash обслуживает клиентов в офисах по фактическим адресам. Адрес конкретного филиала направляется после подтверждения заявки, суммы и времени визита — это нужно для безопасности клиентов, кассовых операций, подготовки нужной суммы и распределения потока между филиалами. Сделка проходит в офисе, не дистанционно и не на выезде.",
+    officeNoteItems: ["Офис есть в каждом городе из списка", "В некоторых городах работает несколько филиалов", "Адрес филиала выдаётся после подтверждения заявки"],
     countryList: "Города присутствия",
     reviewsTitle: "Отзывы клиентов",
     faqTitle: "Вопросы и ответы",
@@ -175,7 +178,7 @@ const content = {
     steps: [
       ["01", "Оставьте заявку", "Выберите город, направление обмена и сумму. Затем напишите менеджеру в Telegram."],
       ["02", "Подтвердите условия", "Менеджер согласует курс, доступность направления и удобное время визита."],
-      ["03", "Приезжайте в офис", "Адрес и детали визита отправляются после подтверждения заявки."],
+      ["03", "Приезжайте в офис", "После подтверждения заявки менеджер направит адрес подходящего филиала и детали визита."],
       ["04", "Проведите обмен", "Сделка завершается на месте: наличные или криптовалюта передаются после проверки."],
     ],
     benefits: [
@@ -199,7 +202,7 @@ const content = {
     faq: [
       ["Нужно ли отправлять деньги заранее?", "Нет. Условия подтверждаются менеджером, обмен проводится в согласованном формате."],
       ["Как фиксируется курс?", "Курс подтверждается менеджером перед визитом. Финальные условия зависят от суммы, города и направления."],
-      ["Где находится офис?", "Точный адрес отправляется в Telegram после согласования заявки и времени визита."],
+      ["Где находится офис?", "Офисы Token Cash работают по фактическим адресам в городах из списка. Адрес конкретного филиала менеджер направляет после подтверждения заявки, суммы и времени визита — это помогает подготовить нужную сумму, выбрать подходящий офис и сохранить безопасность клиента."],
       ["Какие города доступны?", "Token Cash работает в городах России из списка на сайте. Выберите нужный город и напишите менеджеру для согласования деталей визита."],
       ["Какие валюты поддерживаются?", "Фиат: RUB, USD, EUR, KZT, TRY, AED, THB. Крипта: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
@@ -222,7 +225,10 @@ const content = {
     stepsTitle: "How exchange works",
     benefitsTitle: "Why choose Token Cash",
     countriesTitle: "Token Cash cities in Russia",
-    countriesText: "Token Cash operates in Russia. Select a city, exchange direction and contact a manager to confirm the rate and office visit time.",
+    countriesText: "Token Cash operates through offices in the Russian cities listed below. Each listed city has an office, and several cities have multiple branches. Select a city, exchange direction and contact a manager to confirm the rate and visit time.",
+    officeNoteTitle: "Offices and addresses",
+    officeNoteText: "Token Cash serves clients at physical office addresses. The address of the specific branch is shared after the request, amount and visit time are confirmed — this is required for client safety, cash handling, preparation of the required amount and routing clients between branches. The transaction is completed in office, not remotely or on-site outside the office.",
+    officeNoteItems: ["There is an office in every listed city", "Some cities have several branches", "The branch address is shared after request confirmation"],
     countryList: "Available cities",
     reviewsTitle: "Client reviews",
     faqTitle: "Questions and answers",
@@ -231,7 +237,7 @@ const content = {
     steps: [
       ["01", "Submit request", "Choose city, exchange direction and amount. Then contact a manager on Telegram."],
       ["02", "Confirm terms", "Manager confirms rate, availability and convenient visit time."],
-      ["03", "Visit office", "Office address and visit details are sent after confirmation."],
+      ["03", "Visit office", "After the request is confirmed, the manager sends the address of the suitable branch and visit details."],
       ["04", "Complete exchange", "The transaction is completed in office after verification."],
     ],
     benefits: [
@@ -255,7 +261,7 @@ const content = {
     faq: [
       ["Do I need to send funds in advance?", "No. Terms are confirmed by a manager and exchange is completed as agreed."],
       ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, city and exchange direction."],
-      ["Where is the office located?", "The exact address is sent in Telegram after request and visit time are confirmed."],
+      ["Where is the office located?", "Token Cash offices operate at physical addresses in the listed cities. The manager sends the address of the specific branch after the request, amount and visit time are confirmed — this helps prepare the required amount, choose the suitable office and maintain client safety."],
       ["Which cities are available?", "Token Cash operates in Russian cities listed on the website. Select your city and contact a manager to confirm visit details."],
       ["Which currencies are supported?", "Fiat: RUB, USD, EUR, KZT, TRY, AED, THB. Crypto: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
@@ -969,6 +975,21 @@ export default function TokenCashLanding() {
               <div>
                 <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{t.countriesTitle}</h2>
                 <p className="mt-4 max-w-2xl text-zinc-400">{t.countriesText}</p>
+
+                <div className="mt-5 max-w-3xl rounded-2xl border border-cyan-300/15 bg-cyan-300/[.055] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
+                  <div className="mb-2 flex items-center gap-2 text-sm font-black text-cyan-100">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-300/10">🏢</span>
+                    {t.officeNoteTitle}
+                  </div>
+                  <p className="text-sm leading-6 text-zinc-300">{t.officeNoteText}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {t.officeNoteItems.map((item) => (
+                      <span key={item} className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs font-bold text-zinc-200">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <a href="#exchange" className="inline-flex w-fit items-center gap-2 rounded-2xl bg-violet-500 px-6 py-4 font-bold">
