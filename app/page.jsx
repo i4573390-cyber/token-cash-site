@@ -11,114 +11,65 @@ const countries = [
   { ru: "Россия", en: "Russia", code: "RU", fiat: "RUB", markup: 1.027 },
 ];
 
+const exchangeCities = [
+  { ru: "Архангельск", en: "Arkhangelsk" },
+  { ru: "Балашиха", en: "Balashikha" },
+  { ru: "Барнаул", en: "Barnaul" },
+  { ru: "Белгород", en: "Belgorod" },
+  { ru: "Брянск", en: "Bryansk" },
+  { ru: "Владивосток", en: "Vladivostok" },
+  { ru: "Волгоград", en: "Volgograd" },
+  { ru: "Воронеж", en: "Voronezh" },
+  { ru: "Екатеринбург", en: "Yekaterinburg" },
+  { ru: "Иваново", en: "Ivanovo" },
+  { ru: "Ижевск", en: "Izhevsk" },
+  { ru: "Иркутск", en: "Irkutsk" },
+  { ru: "Казань", en: "Kazan" },
+  { ru: "Калининград", en: "Kaliningrad" },
+  { ru: "Кемерово", en: "Kemerovo" },
+  { ru: "Киров", en: "Kirov" },
+  { ru: "Краснодар", en: "Krasnodar" },
+  { ru: "Красноярск", en: "Krasnoyarsk" },
+  { ru: "Курск", en: "Kursk" },
+  { ru: "Липецк", en: "Lipetsk" },
+  { ru: "Магнитогорск", en: "Magnitogorsk" },
+  { ru: "Махачкала", en: "Makhachkala" },
+  { ru: "Москва", en: "Moscow" },
+  { ru: "Набережные Челны", en: "Naberezhnye Chelny" },
+  { ru: "Нижний Новгород", en: "Nizhny Novgorod" },
+  { ru: "Нижний Тагил", en: "Nizhny Tagil" },
+  { ru: "Новосибирск", en: "Novosibirsk" },
+  { ru: "Омск", en: "Omsk" },
+  { ru: "Оренбург", en: "Orenburg" },
+  { ru: "Пенза", en: "Penza" },
+  { ru: "Пермь", en: "Perm" },
+  { ru: "Ростов-на-Дону", en: "Rostov-on-Don" },
+  { ru: "Самара", en: "Samara" },
+  { ru: "Санкт-Петербург", en: "Saint Petersburg" },
+  { ru: "Саратов", en: "Saratov" },
+  { ru: "Севастополь", en: "Sevastopol" },
+  { ru: "Сочи", en: "Sochi" },
+  { ru: "Ставрополь", en: "Stavropol" },
+  { ru: "Сургут", en: "Surgut" },
+  { ru: "Тверь", en: "Tver" },
+  { ru: "Тольятти", en: "Tolyatti" },
+  { ru: "Томск", en: "Tomsk" },
+  { ru: "Тула", en: "Tula" },
+  { ru: "Тюмень", en: "Tyumen" },
+  { ru: "Ульяновск", en: "Ulyanovsk" },
+  { ru: "Уфа", en: "Ufa" },
+  { ru: "Хабаровск", en: "Khabarovsk" },
+  { ru: "Чебоксары", en: "Cheboksary" },
+  { ru: "Челябинск", en: "Chelyabinsk" },
+  { ru: "Ярославль", en: "Yaroslavl" },
+];
+
 const countryCities = {
-  RU: [
-    "Архангельск",
-    "Балашиха",
-    "Барнаул",
-    "Белгород",
-    "Брянск",
-    "Владивосток",
-    "Волгоград",
-    "Воронеж",
-    "Екатеринбург",
-    "Иваново",
-    "Ижевск",
-    "Иркутск",
-    "Казань",
-    "Калининград",
-    "Кемерово",
-    "Киров",
-    "Краснодар",
-    "Красноярск",
-    "Курск",
-    "Липецк",
-    "Магнитогорск",
-    "Махачкала",
-    "Москва",
-    "Набережные Челны",
-    "Нижний Новгород",
-    "Нижний Тагил",
-    "Новосибирск",
-    "Омск",
-    "Оренбург",
-    "Пенза",
-    "Пермь",
-    "Ростов-на-Дону",
-    "Самара",
-    "Санкт-Петербург",
-    "Саратов",
-    "Севастополь",
-    "Сочи",
-    "Ставрополь",
-    "Сургут",
-    "Тверь",
-    "Тольятти",
-    "Томск",
-    "Тула",
-    "Тюмень",
-    "Ульяновск",
-    "Уфа",
-    "Хабаровск",
-    "Чебоксары",
-    "Челябинск",
-    "Ярославль",
-  ],
+  RU: exchangeCities.map((city) => city.ru),
 };
 
 const countryCitiesEn = {
-  RU: [
-    "Arkhangelsk",
-    "Balashikha",
-    "Barnaul",
-    "Belgorod",
-    "Bryansk",
-    "Cheboksary",
-    "Chelyabinsk",
-    "Irkutsk",
-    "Ivanovo",
-    "Izhevsk",
-    "Kaliningrad",
-    "Kazan",
-    "Kemerovo",
-    "Khabarovsk",
-    "Kirov",
-    "Krasnodar",
-    "Krasnoyarsk",
-    "Kursk",
-    "Lipetsk",
-    "Magnitogorsk",
-    "Makhachkala",
-    "Moscow",
-    "Naberezhnye Chelny",
-    "Nizhny Novgorod",
-    "Nizhny Tagil",
-    "Novosibirsk",
-    "Omsk",
-    "Orenburg",
-    "Penza",
-    "Perm",
-    "Rostov-on-Don",
-    "Saint Petersburg",
-    "Samara",
-    "Saratov",
-    "Sevastopol",
-    "Sochi",
-    "Stavropol",
-    "Surgut",
-    "Tolyatti",
-    "Tomsk",
-    "Tula",
-    "Tver",
-    "Tyumen",
-    "Ufa",
-    "Ulyanovsk",
-    "Vladivostok",
-    "Volgograd",
-    "Voronezh",
-    "Yaroslavl",
-    "Yekaterinburg",
-  ],
+  RU: exchangeCities.map((city) => city.en),
 };
 
 const activeMapCountries = [
@@ -126,12 +77,13 @@ const activeMapCountries = [
 ];
 
 const crypto = ["USDT", "BTC", "ETH", "BNB", "SOL", "USDC"];
-const fiat = ["RUB"];
+const fiat = ["RUB", "USD", "EUR", "KZT", "TRY", "AED", "THB"];
 const currencies = [...crypto, ...fiat];
 
 const fallbackUsdRates = {
   USDT: 1,
   USDC: 1,
+  USD: 1,
   BTC: 68000,
   ETH: 3200,
   BNB: 580,
@@ -142,8 +94,10 @@ const fallbackUsdRates = {
   IDR: 0.000061,
   INR: 0.012,
   KGS: 0.0114,
+  EUR: 1.08,
   KZT: 0.0021,
   RUB: 0.0108,
+  TRY: 0.031,
   THB: 0.0275,
   UZS: 0.000079,
 };
@@ -199,7 +153,7 @@ const content = {
     links: ["#exchange", "#steps", "#countries", "#benefits", "#reviews", "#faq"],
     contact: "Контакты",
     title: "Обмен криптовалют в офисе",
-    subtitle: "Лучшие курсы для новых и постоянных клиентов. Обмен криптовалюты в офисах Token Cash во многих городах России.",
+    subtitle: "Лучшие курсы для новых и постоянных клиентов. Обмен криптовалюты за наличные в офисах Token Cash по городам России.",
     start: "Совершить обмен",
     tg: "Написать в Telegram",
     formSmall: "Заявка на обмен",
@@ -220,7 +174,7 @@ const content = {
     steps: [
       ["01", "Оставьте заявку", "Выберите город, направление обмена и сумму. Затем напишите менеджеру в Telegram."],
       ["02", "Подтвердите условия", "Менеджер согласует курс, доступность направления и удобное время визита."],
-      ["03", "Приезжайте в офис", "Точный адрес и детали визита отправляются после подтверждения заявки."],
+      ["03", "Приезжайте в офис", "Адрес и детали визита отправляются после подтверждения заявки."],
       ["04", "Проведите обмен", "Сделка завершается на месте: наличные или криптовалюта передаются после проверки."],
     ],
     benefits: [
@@ -246,7 +200,7 @@ const content = {
       ["Как фиксируется курс?", "Курс подтверждается менеджером перед визитом. Финальные условия зависят от суммы, города и направления."],
       ["Где находится офис?", "Точный адрес отправляется в Telegram после согласования заявки и времени визита."],
       ["Какие города доступны?", "Token Cash работает в городах России из списка на сайте. Выберите нужный город и напишите менеджеру для согласования деталей визита."],
-      ["Какие валюты поддерживаются?", "Фиат: RUB. Крипта: USDT, BTC, ETH, BNB, SOL, USDC."],
+      ["Какие валюты поддерживаются?", "Фиат: RUB, USD, EUR, KZT, TRY, AED, THB. Крипта: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
   },
   en: {
@@ -298,10 +252,10 @@ const content = {
     ],
     faq: [
       ["Do I need to send funds in advance?", "No. Terms are confirmed by a manager and exchange is completed as agreed."],
-      ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, country and exchange direction."],
+      ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, city and exchange direction."],
       ["Where is the office located?", "The exact address is sent in Telegram after request and visit time are confirmed."],
       ["Which cities are available?", "Token Cash operates in Russian cities listed on the website. Select your city and contact a manager to confirm visit details."],
-      ["Which currencies are supported?", "Fiat: RUB. Crypto: USDT, BTC, ETH, BNB, SOL, USDC."],
+      ["Which currencies are supported?", "Fiat: RUB, USD, EUR, KZT, TRY, AED, THB. Crypto: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
   },
 };
@@ -472,13 +426,15 @@ function CustomSelect({ value, options, onChange, name, openName, setOpenName, c
   );
 }
 function ExchangeForm({ t, lang }) {
-  const [countryCode, setCountryCode] = useState("RU");
-  const [countryOpen, setCountryOpen] = useState(false);
+  const moscowIndex = exchangeCities.findIndex((city) => city.ru === "Москва");
+  const [cityIndex, setCityIndex] = useState(moscowIndex >= 0 ? moscowIndex : 0);
+  const [cityOpen, setCityOpen] = useState(false);
   const [give, setGive] = useState("USDT");
   const [receive, setReceive] = useState("RUB");
   const [amount, setAmount] = useState("1000");
   const [marketUsdRates, setMarketUsdRates] = useState(fallbackUsdRates);
   const [selectOpen, setSelectOpen] = useState(null);
+
   useEffect(() => {
     let isMounted = true;
 
@@ -496,18 +452,13 @@ function ExchangeForm({ t, lang }) {
     };
   }, []);
 
-  const country = countries.find((c) => c.code === countryCode) || countries[0];
+  const selectedCity = exchangeCities[cityIndex] || exchangeCities[0];
+  const markup = countries[0]?.markup || 1;
   const numericAmount = Number(String(amount).replace(",", ".")) || 0;
   const marketRate = marketUsdRates[give] && marketUsdRates[receive] ? marketUsdRates[give] / marketUsdRates[receive] : 0;
-  const clientRate = marketRate * country.markup;
+  const clientRate = marketRate * markup;
   const result = numericAmount * clientRate;
   const formatted = result > 0 ? result.toLocaleString(lang === "ru" ? "ru-RU" : "en-US", { maximumFractionDigits: result > 100 ? 2 : 6 }) : "—";
-
-  function changeCountry(value) {
-    setCountryCode(value);
-    const next = countries.find((c) => c.code === value);
-    if (next) setReceive(next.fiat);
-  }
 
   return (
     <div className="relative overflow-visible rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025)_45%,rgba(34,211,238,.035))] p-4 shadow-[0_28px_90px_rgba(0,0,0,.36),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-18px_40px_rgba(0,0,0,.22)] backdrop-blur-xl sm:p-5">
@@ -523,33 +474,32 @@ function ExchangeForm({ t, lang }) {
       <div className="relative z-30 mb-4">
         <button
           type="button"
-          onClick={() => setCountryOpen((value) => !value)}
+          onClick={() => setCityOpen((value) => !value)}
           className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[.055] px-4 py-3 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10),inset_0_-10px_22px_rgba(0,0,0,.18)] outline-none backdrop-blur-xl transition hover:border-violet-300/30"
         >
           <span className="font-semibold">
-            {lang === "ru" ? country.ru : country.en} · {country.fiat}
+            {lang === "ru" ? selectedCity.ru : selectedCity.en}
           </span>
-          <span className={`text-zinc-300 transition ${countryOpen ? "rotate-180" : ""}`}>⌄</span>
+          <span className={`text-zinc-300 transition ${cityOpen ? "rotate-180" : ""}`}>⌄</span>
         </button>
 
-        {countryOpen && (
+        {cityOpen && (
           <>
-            <button type="button" aria-label="Close country select" onClick={() => setCountryOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
-            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[280px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl">
-              {countries.map((c) => (
+            <button type="button" aria-label="Close city select" onClick={() => setCityOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
+            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[320px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
+              {exchangeCities.map((city, index) => (
                 <button
-                  key={c.code}
+                  key={city.ru}
                   type="button"
                   onClick={() => {
-                    changeCountry(c.code);
-                    setCountryOpen(false);
+                    setCityIndex(index);
+                    setCityOpen(false);
                   }}
                   className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${
-                    c.code === countryCode ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
+                    index === cityIndex ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
                   }`}
                 >
-                  <span className="font-bold">{lang === "ru" ? c.ru : c.en}</span>
-                  <span className="rounded-full bg-violet-500/15 px-3 py-1 text-xs font-bold text-violet-100">{c.fiat}</span>
+                  <span className="font-bold">{lang === "ru" ? city.ru : city.en}</span>
                 </button>
               ))}
             </div>
@@ -563,14 +513,14 @@ function ExchangeForm({ t, lang }) {
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <input className="w-full bg-transparent text-xl font-semibold text-white outline-none" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" />
             <CustomSelect
-  className="mt-3"
-  name="give"
-  value={give}
-  options={currencies}
-  onChange={setGive}
-  openName={selectOpen}
-  setOpenName={setSelectOpen}
-/>
+              className="mt-3"
+              name="give"
+              value={give}
+              options={currencies}
+              onChange={setGive}
+              openName={selectOpen}
+              setOpenName={setSelectOpen}
+            />
           </div>
         </div>
 
@@ -579,14 +529,14 @@ function ExchangeForm({ t, lang }) {
           <div className="rounded-2xl border border-white/10 bg-white/[.045] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
             <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-xl font-semibold text-white">{formatted}</div>
             <CustomSelect
-  className="mt-3"
-  name="receive"
-  value={receive}
-  options={currencies}
-  onChange={setReceive}
-  openName={selectOpen}
-  setOpenName={setSelectOpen}
-/>
+              className="mt-3"
+              name="receive"
+              value={receive}
+              options={currencies}
+              onChange={setReceive}
+              openName={selectOpen}
+              setOpenName={setSelectOpen}
+            />
           </div>
         </div>
       </div>
