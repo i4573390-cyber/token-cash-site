@@ -1,9 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Token Cash — обмен криптовалют в России",
+  title: "Token Cash — обмен криптовалют и наличных",
   description:
-    "Token Cash — обмен криптовалюты и наличных в офисах по городам России: USDT, BTC, ETH, BNB, SOL, USDC и RUB через персонального менеджера.",
+    "Token Cash — быстрый обмен криптовалюты и наличных: USDT, BTC, ETH, BNB, SOL, USDC, RUB, USD и EUR через персонального менеджера.",
 };
 
 export default function RootLayout({ children }) {
