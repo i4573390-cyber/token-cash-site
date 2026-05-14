@@ -17,11 +17,8 @@ const exchangeCities = [
   { ru: "Барнаул", en: "Barnaul" },
   { ru: "Белгород", en: "Belgorod" },
   { ru: "Брянск", en: "Bryansk" },
-  { ru: "Великий Новгород", en: "Veliky Novgorod" },
   { ru: "Владивосток", en: "Vladivostok" },
-  { ru: "Владимир", en: "Vladimir" },
   { ru: "Волгоград", en: "Volgograd" },
-  { ru: "Вологда", en: "Vologda" },
   { ru: "Воронеж", en: "Voronezh" },
   { ru: "Екатеринбург", en: "Yekaterinburg" },
   { ru: "Иваново", en: "Ivanovo" },
@@ -29,10 +26,8 @@ const exchangeCities = [
   { ru: "Иркутск", en: "Irkutsk" },
   { ru: "Казань", en: "Kazan" },
   { ru: "Калининград", en: "Kaliningrad" },
-  { ru: "Калуга", en: "Kaluga" },
   { ru: "Кемерово", en: "Kemerovo" },
   { ru: "Киров", en: "Kirov" },
-  { ru: "Кострома", en: "Kostroma" },
   { ru: "Краснодар", en: "Krasnodar" },
   { ru: "Красноярск", en: "Krasnoyarsk" },
   { ru: "Курск", en: "Kursk" },
@@ -49,17 +44,13 @@ const exchangeCities = [
   { ru: "Пенза", en: "Penza" },
   { ru: "Пермь", en: "Perm" },
   { ru: "Ростов-на-Дону", en: "Rostov-on-Don" },
-  { ru: "Рязань", en: "Ryazan" },
   { ru: "Самара", en: "Samara" },
   { ru: "Санкт-Петербург", en: "Saint Petersburg" },
-  { ru: "Саранск", en: "Saransk" },
   { ru: "Саратов", en: "Saratov" },
   { ru: "Севастополь", en: "Sevastopol" },
-  { ru: "Смоленск", en: "Smolensk" },
   { ru: "Сочи", en: "Sochi" },
   { ru: "Ставрополь", en: "Stavropol" },
   { ru: "Сургут", en: "Surgut" },
-  { ru: "Тамбов", en: "Tambov" },
   { ru: "Тверь", en: "Tver" },
   { ru: "Тольятти", en: "Tolyatti" },
   { ru: "Томск", en: "Tomsk" },
@@ -158,36 +149,36 @@ async function fetchMarketUsdRates() {
 
 const content = {
   ru: {
-    nav: ["Обмен", "Как проходит", "Города", "Преимущества", "Отзывы", "FAQ"],
-    links: ["#exchange", "#steps", "#countries", "#benefits", "#reviews", "#faq"],
+    nav: ["Обмен", "Как проходит", "Услуги", "Преимущества", "Отзывы", "FAQ"],
+    links: ["#exchange", "#steps", "#services", "#benefits", "#reviews", "#faq"],
     contact: "Контакты",
     title: "Обмен криптовалют в офисе",
-    subtitle: "Лучшие курсы для новых и постоянных клиентов. Обмен криптовалюты за наличные в офисах Token Cash по городам России.",
+    subtitle: "Быстрый обмен криптовалюты и наличных: USDT, BTC, ETH, RUB, USD, EUR и другие популярные направления. Менеджер подтвердит курс, сумму и условия сделки.",
     start: "Совершить обмен",
     tg: "Написать в Telegram",
     formSmall: "Заявка на обмен",
     formTitle: "Оформить сделку",
-    country: "Город обмена",
+    country: "Условия сделки",
     give: "Вы отдаёте",
     receive: "Вы получаете",
     submit: "Зафиксировать курс",
-    rateNotice: "Курс предварительный и может измениться до финального подтверждения менеджером. Итоговые условия зависят от города, суммы и направления обмена.",
+    rateNotice: "Курс предварительный и может измениться до финального подтверждения менеджером. Итоговые условия зависят от суммы, направления обмена и доступной ликвидности.",
     stepsTitle: "Как проходит обмен",
     benefitsTitle: "Почему выбирают Token Cash",
-    countriesTitle: "Города Token Cash в России",
-    countriesText: "Token Cash работает через офисы в городах России из списка ниже. В каждом городе есть офис обслуживания, а в отдельных городах работает несколько филиалов. Выберите город, направление обмена и свяжитесь с менеджером для согласования курса и времени визита.",
-    officeNoteTitle: "Офисы и адреса",
-    officeNoteText: "Token Cash обслуживает клиентов в офисах по фактическим адресам. Адрес конкретного филиала направляется после подтверждения заявки, суммы и времени визита — это нужно для безопасности клиентов, кассовых операций, подготовки нужной суммы и распределения потока между филиалами. Сделка проходит в офисе, не дистанционно и не на выезде.",
-    officeNoteItems: ["Офис есть в каждом городе из списка", "В некоторых городах работает несколько филиалов", "Адрес филиала выдаётся после подтверждения заявки"],
-    countryList: "Города присутствия",
+    servicesTitle: "Основные услуги Token Cash",
+    servicesText: "Основные направления обмена и обслуживания клиентов. Все условия сделки предварительно согласуются с менеджером: курс, сумма, способ получения и время визита.",
+    serviceNoteTitle: "Безопасная сделка",
+    serviceNoteText: "Token Cash не публикует детали визита в открытом доступе. Менеджер подтверждает условия сделки индивидуально: это помогает подготовить нужную сумму, сохранить конфиденциальность клиента и провести обмен без лишнего ожидания.",
+    serviceNoteItems: ["Курс фиксируется менеджером", "Без предоплаты", "Конфиденциальное сопровождение"],
+    serviceList: "Направления",
     reviewsTitle: "Отзывы клиентов",
     faqTitle: "Вопросы и ответы",
     finalTitle: "Готовы совершить обмен?",
-    finalText: "Напишите менеджеру Token Cash — согласуем город, сумму, направление и удобное время визита в офис.",
+    finalText: "Напишите менеджеру Token Cash — согласуем сумму, направление, курс и удобный формат сделки.",
     steps: [
-      ["01", "Оставьте заявку", "Выберите город, направление обмена и сумму. Затем напишите менеджеру в Telegram."],
+      ["01", "Оставьте заявку", "Укажите направление обмена, сумму и удобный способ связи."],
       ["02", "Подтвердите условия", "Менеджер согласует курс, доступность направления и удобное время визита."],
-      ["03", "Приезжайте в офис", "После подтверждения заявки менеджер направит адрес подходящего филиала и детали визита."],
+      ["03", "Получите инструкции", "После подтверждения заявки менеджер направит детали сделки и дальнейшие шаги."],
       ["04", "Проведите обмен", "Сделка завершается на месте: наличные или криптовалюта передаются после проверки."],
     ],
     benefits: [
@@ -210,43 +201,43 @@ const content = {
     ],
     faq: [
       ["Нужно ли отправлять деньги заранее?", "Нет. Условия подтверждаются менеджером, обмен проводится в согласованном формате."],
-      ["Как фиксируется курс?", "Курс подтверждается менеджером перед визитом. Финальные условия зависят от суммы, города и направления."],
-      ["Где находится офис?", "Офисы Token Cash работают по фактическим адресам в городах из списка. Адрес конкретного филиала менеджер направляет после подтверждения заявки, суммы и времени визита — это помогает подготовить нужную сумму, выбрать подходящий офис и сохранить безопасность клиента."],
-      ["Какие города доступны?", "Token Cash работает в городах России из списка на сайте. Выберите нужный город и напишите менеджеру для согласования деталей визита."],
+      ["Как фиксируется курс?", "Курс подтверждается менеджером перед сделкой. Финальные условия зависят от суммы, направления обмена и доступной ликвидности."],
+      ["Как проходит сделка?", "Менеджер подтверждает заявку, курс, сумму и дальнейшие инструкции. Детали визита не публикуются открыто по соображениям безопасности и конфиденциальности клиента."],
+      ["Почему детали визита не указаны на сайте?", "Обмен связан с наличными и цифровыми активами, поэтому детали сделки и визита подтверждаются индивидуально менеджером после заявки."],
       ["Какие валюты поддерживаются?", "Фиат: RUB, USD, EUR, KZT, TRY, AED, THB. Крипта: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
   },
   en: {
-    nav: ["Exchange", "Process", "Cities", "Benefits", "Reviews", "FAQ"],
-    links: ["#exchange", "#steps", "#countries", "#benefits", "#reviews", "#faq"],
+    nav: ["Exchange", "Process", "Services", "Benefits", "Reviews", "FAQ"],
+    links: ["#exchange", "#steps", "#services", "#benefits", "#reviews", "#faq"],
     contact: "Contacts",
     title: "Crypto exchange in office",
-    subtitle: "Best rates for new and returning clients. Crypto exchange for cash in Token Cash offices across Russian cities.",
+    subtitle: "Fast crypto and cash exchange: USDT, BTC, ETH, RUB, USD, EUR and other popular directions. A manager confirms the rate, amount and transaction terms.",
     start: "Start exchange",
     tg: "Message Telegram",
     formSmall: "Exchange request",
     formTitle: "Create request",
-    country: "Exchange city",
+    country: "Deal terms",
     give: "You send",
     receive: "You receive",
     submit: "Lock the rate",
-    rateNotice: "The displayed rate is preliminary and may change before final confirmation by the manager. Final terms depend on city, amount and exchange direction.",
+    rateNotice: "The displayed rate is preliminary and may change before final confirmation by the manager. Final terms depend on amount, exchange direction and available liquidity.",
     stepsTitle: "How exchange works",
     benefitsTitle: "Why choose Token Cash",
-    countriesTitle: "Token Cash cities in Russia",
-    countriesText: "Token Cash operates through offices in the Russian cities listed below. Each listed city has an office, and several cities have multiple branches. Select a city, exchange direction and contact a manager to confirm the rate and visit time.",
-    officeNoteTitle: "Offices and addresses",
-    officeNoteText: "Token Cash serves clients at physical office addresses. The address of the specific branch is shared after the request, amount and visit time are confirmed — this is required for client safety, cash handling, preparation of the required amount and routing clients between branches. The transaction is completed in office, not remotely or on-site outside the office.",
-    officeNoteItems: ["There is an office in every listed city", "Some cities have several branches", "The branch address is shared after request confirmation"],
-    countryList: "Available cities",
+    servicesTitle: "Token Cash main services",
+    servicesText: "Main exchange and client service directions. All transaction terms are confirmed with a manager in advance: rate, amount, payout method and timing.",
+    serviceNoteTitle: "Safe transaction",
+    serviceNoteText: "Token Cash does not publish visit details openly. A manager confirms transaction terms individually: this helps prepare the required amount, preserve client privacy and complete the exchange without unnecessary waiting.",
+    serviceNoteItems: ["Rate confirmed by manager", "No prepayment", "Private support"],
+    serviceList: "Directions",
     reviewsTitle: "Client reviews",
     faqTitle: "Questions and answers",
     finalTitle: "Ready to exchange?",
-    finalText: "Contact Token Cash manager — we will confirm city, amount, direction and office visit time.",
+    finalText: "Contact Token Cash manager — we will confirm amount, direction, rate and convenient transaction format.",
     steps: [
-      ["01", "Submit request", "Choose city, exchange direction and amount. Then contact a manager on Telegram."],
+      ["01", "Submit request", "Specify exchange direction, amount and preferred contact method."],
       ["02", "Confirm terms", "Manager confirms rate, availability and convenient visit time."],
-      ["03", "Visit office", "After the request is confirmed, the manager sends the address of the suitable branch and visit details."],
+      ["03", "Get instructions", "After the request is confirmed, the manager sends transaction details and next steps."],
       ["04", "Complete exchange", "The transaction is completed in office after verification."],
     ],
     benefits: [
@@ -269,9 +260,9 @@ const content = {
     ],
     faq: [
       ["Do I need to send funds in advance?", "No. Terms are confirmed by a manager and exchange is completed as agreed."],
-      ["How is the rate fixed?", "The rate is confirmed before the visit. Final terms depend on amount, city and exchange direction."],
-      ["Where is the office located?", "Token Cash offices operate at physical addresses in the listed cities. The manager sends the address of the specific branch after the request, amount and visit time are confirmed — this helps prepare the required amount, choose the suitable office and maintain client safety."],
-      ["Which cities are available?", "Token Cash operates in Russian cities listed on the website. Select your city and contact a manager to confirm visit details."],
+      ["How is the rate fixed?", "The rate is confirmed before the transaction. Final terms depend on amount, exchange direction and available liquidity."],
+      ["How does the transaction work?", "A manager confirms the request, rate, amount and further instructions. Visit details are not published openly for client safety and privacy reasons."],
+      ["Why are visit details not listed on the website?", "Exchange may involve cash and digital assets, so transaction and visit details are confirmed individually by a manager after the request."],
       ["Which currencies are supported?", "Fiat: RUB, USD, EUR, KZT, TRY, AED, THB. Crypto: USDT, BTC, ETH, BNB, SOL, USDC."],
     ],
   },
@@ -448,9 +439,6 @@ function CustomSelect({ value, options, onChange, name, openName, setOpenName, c
   );
 }
 function ExchangeForm({ t, lang }) {
-  const moscowIndex = exchangeCities.findIndex((city) => city.ru === "Москва");
-  const [cityIndex, setCityIndex] = useState(moscowIndex >= 0 ? moscowIndex : 0);
-  const [cityOpen, setCityOpen] = useState(false);
   const [give, setGive] = useState("USDT");
   const [receive, setReceive] = useState("RUB");
   const [amount, setAmount] = useState("1000");
@@ -474,9 +462,7 @@ function ExchangeForm({ t, lang }) {
     };
   }, []);
 
-  const selectedCity = exchangeCities[cityIndex] || exchangeCities[0];
-  const baseMarkup = countries[0]?.markup || 1;
-  const markup = baseMarkup * getCityRateModifier(cityIndex);
+  const markup = countries[0]?.markup || 1;
   const numericAmount = Number(String(amount).replace(",", ".")) || 0;
   const marketRate = marketUsdRates[give] && marketUsdRates[receive] ? marketUsdRates[give] / marketUsdRates[receive] : 0;
   const clientRate = marketRate * markup;
@@ -493,41 +479,11 @@ function ExchangeForm({ t, lang }) {
         <div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-200">LIVE</div>
       </div>
 
-      <label className="relative z-10 mb-2 block text-xs text-zinc-500">{t.country}</label>
-      <div className="relative z-30 mb-4">
-        <button
-          type="button"
-          onClick={() => setCityOpen((value) => !value)}
-          className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[.055] px-4 py-3 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10),inset_0_-10px_22px_rgba(0,0,0,.18)] outline-none backdrop-blur-xl transition hover:border-violet-300/30"
-        >
-          <span className="font-semibold">
-            {lang === "ru" ? selectedCity.ru : selectedCity.en}
-          </span>
-          <span className={`text-zinc-300 transition ${cityOpen ? "rotate-180" : ""}`}>⌄</span>
-        </button>
-
-        {cityOpen && (
-          <>
-            <button type="button" aria-label="Close city select" onClick={() => setCityOpen(false)} className="fixed inset-0 z-40 cursor-default bg-transparent" />
-            <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 max-h-[320px] overflow-y-auto rounded-2xl border border-white/10 bg-[#14101f]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-2xl [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
-              {exchangeCities.map((city, index) => (
-                <button
-                  key={city.ru}
-                  type="button"
-                  onClick={() => {
-                    setCityIndex(index);
-                    setCityOpen(false);
-                  }}
-                  className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition ${
-                    index === cityIndex ? "bg-gradient-to-r from-violet-500/35 to-cyan-300/15 text-white" : "text-zinc-300 hover:bg-white/[.06] hover:text-white"
-                  }`}
-                >
-                  <span className="font-bold">{lang === "ru" ? city.ru : city.en}</span>
-                </button>
-              ))}
-            </div>
-          </>
-        )}
+      <div className="relative z-10 mb-4 rounded-2xl border border-white/10 bg-white/[.045] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-10px_22px_rgba(0,0,0,.18)] backdrop-blur-xl">
+        <div className="text-xs text-zinc-500">{t.country}</div>
+        <div className="mt-1 text-sm font-bold text-white">
+          {lang === "ru" ? "Курс, сумма и формат сделки подтверждаются менеджером" : "Rate, amount and transaction format are confirmed by a manager"}
+        </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -791,19 +747,9 @@ function DottedWorldMap({ lang, onCountrySelect, selectedCountryCode }) {
 export default function TokenCashLanding() {
   const [lang, setLang] = useState("ru");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openCountryCode, setOpenCountryCode] = useState("RU");
-
   const t = content[lang];
   const navLinks = t.nav.map((label, i) => [t.links[i], label]);
 
-  const countryCards = useMemo(
-    () =>
-      countries.map((c) => ({
-        ...c,
-        cities: lang === "ru" ? countryCities[c.code] || [] : countryCitiesEn[c.code] || countryCities[c.code] || [],
-      })),
-    [lang]
-  );
 
   return (
     <div className="min-h-screen bg-[#07070B] text-white selection:bg-violet-400 selection:text-black">
@@ -895,13 +841,13 @@ export default function TokenCashLanding() {
 
                 <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
                   {lang === "ru"
-                    ? "Мы не показываем один общий курс для всех. Итоговые условия согласуются с менеджером и зависят от города, суммы, направления обмена и доступной ликвидности."
-                    : "We do not show one fixed rate for everyone. Final terms are confirmed with a manager and depend on the city, amount, exchange direction, and available liquidity."}
+                    ? "Мы не показываем один общий курс для всех. Итоговые условия согласуются с менеджером и зависят от суммы, направления обмена, способа получения и доступной ликвидности."
+                    : "We do not show one fixed rate for everyone. Final terms are confirmed with a manager and depend on amount, exchange direction, payout method, and available liquidity."}
                 </p>
 
                 <div className="mt-7 grid gap-3">
                   {[
-                    lang === "ru" ? ["Город и валюта", "Учитываем город, локальную валюту и доступность выдачи."] : ["City and currency", "We factor in the city, local currency, and payout availability."],
+                    lang === "ru" ? ["Валюта и ликвидность", "Учитываем валюту, направление и доступность выдачи."] : ["Currency and liquidity", "We factor in currency, direction, and payout availability."],
                     lang === "ru" ? ["Сумма обмена", "Для крупных сумм возможны индивидуальные условия."] : ["Exchange amount", "Large amounts may qualify for custom terms."],
                     lang === "ru" ? ["Направление сделки", "Crypto → Cash, Cash → Crypto или Crypto → Crypto рассчитываются отдельно."] : ["Exchange direction", "Crypto → Cash, Cash → Crypto, and Crypto → Crypto are calculated separately."],
                   ].map(([title, text]) => (
@@ -978,21 +924,21 @@ export default function TokenCashLanding() {
           </div>
         </section>
 
-        <section id="countries" className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20">
+        <section id="services" className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02)_48%,rgba(34,211,238,.035))] p-5 shadow-[0_30px_100px_rgba(0,0,0,.34),inset_0_1px_0_rgba(255,255,255,.10),inset_0_-24px_48px_rgba(0,0,0,.24)] backdrop-blur-xl sm:p-10">
             <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
               <div>
-                <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{t.countriesTitle}</h2>
-                <p className="mt-4 max-w-2xl text-zinc-400">{t.countriesText}</p>
+                <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{t.servicesTitle}</h2>
+                <p className="mt-4 max-w-2xl text-zinc-400">{t.servicesText}</p>
 
                 <div className="mt-5 max-w-3xl rounded-2xl border border-cyan-300/15 bg-cyan-300/[.055] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
                   <div className="mb-2 flex items-center gap-2 text-sm font-black text-cyan-100">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-300/10">🏢</span>
-                    {t.officeNoteTitle}
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-300/10">🔒</span>
+                    {t.serviceNoteTitle}
                   </div>
-                  <p className="text-sm leading-6 text-zinc-300">{t.officeNoteText}</p>
+                  <p className="text-sm leading-6 text-zinc-300">{t.serviceNoteText}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {t.officeNoteItems.map((item) => (
+                    {t.serviceNoteItems.map((item) => (
                       <span key={item} className="rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-xs font-bold text-zinc-200">
                         {item}
                       </span>
@@ -1006,40 +952,21 @@ export default function TokenCashLanding() {
               </a>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-[1.65fr_.75fr]">
-              <DottedWorldMap lang={lang} onCountrySelect={setOpenCountryCode} selectedCountryCode={openCountryCode} />
-
-              <div id="country-list">
-                <div className="mb-4 text-sm font-bold uppercase tracking-[.18em] text-zinc-500">{t.countryList}</div>
-
-                {countryCards.map((c) => (
-                  <div
-                    key={c.code}
-                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[.045] shadow-[0_16px_38px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl"
-                  >
-                    <div className="flex items-center justify-between gap-3 px-4 py-3">
-                      <span className="font-semibold">{lang === "ru" ? c.ru : c.en}</span>
-                      <span className="ml-auto rounded-full bg-violet-500/10 px-3 py-1 text-sm text-violet-200">{c.fiat}</span>
-                    </div>
-
-                    {c.cities.length > 0 ? (
-                      <div className="border-t border-white/10 px-4 pb-4 pt-3">
-                        <div className="mb-3 text-xs font-bold uppercase tracking-[.16em] text-zinc-500">{formatCityCount(c.cities.length, lang)}</div>
-
-                        <div className="grid max-h-[420px] gap-2 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:rgba(139,92,246,.65)_rgba(255,255,255,.06)]">
-                          {c.cities.map((city) => (
-                            <a key={city} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-zinc-300 transition hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-white">
-                              {city}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="border-t border-white/10 px-4 pb-4 pt-3 text-sm text-zinc-500">{lang === "ru" ? "Список городов скоро будет добавлен" : "City list will be added soon"}</div>
-                    )}
-                  </div>
-                ))}
-              </div>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                ["₿", lang === "ru" ? "Покупка криптовалюты" : "Buy crypto", lang === "ru" ? "Покупка USDT, BTC, ETH и других активов за наличные или фиат." : "Buy USDT, BTC, ETH and other assets with cash or fiat."],
+                ["💵", lang === "ru" ? "Продажа криптовалюты" : "Sell crypto", lang === "ru" ? "Продажа криптовалюты с получением наличных или другой валюты." : "Sell crypto and receive cash or another currency."],
+                ["⇄", lang === "ru" ? "Обмен криптовалют" : "Crypto swap", lang === "ru" ? "Обмен популярных монет и стейблкоинов между разными направлениями." : "Swap popular coins and stablecoins across directions."],
+                ["📄", lang === "ru" ? "Оплата счетов" : "Invoice payments", lang === "ru" ? "Помощь с оплатой счетов и инвойсов после проверки реквизитов." : "Assistance with invoice payments after payment details are checked."],
+                ["🛡️", lang === "ru" ? "Сопровождение сделки" : "Deal support", lang === "ru" ? "Менеджер сопровождает заявку от расчёта до завершения обмена." : "A manager supports the request from calculation to transaction completion."],
+                ["⚡", lang === "ru" ? "Предварительный расчёт" : "Preliminary estimate", lang === "ru" ? "Калькулятор показывает ориентир, финальный курс подтверждается менеджером." : "The calculator shows an estimate; final rate is confirmed by a manager."],
+              ].map(([icon, title, text]) => (
+                <div key={title} className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.045] p-6 shadow-[0_18px_50px_rgba(0,0,0,.22),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-violet-300/30">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 text-xl">{icon}</div>
+                  <h3 className="text-xl font-black text-white">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">{text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
