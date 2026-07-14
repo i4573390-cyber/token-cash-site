@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-const TELEGRAM_URL = "https://t.me/TokenCashExchange";
+const TELEGRAM_URL = "https://telegram.me/TokenCashExchange";
 const TELEGRAM_HANDLE = "@TokenCashExchange";
 const LOGO_SRC = "/logo.webp";
 
